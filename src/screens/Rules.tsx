@@ -1,8 +1,8 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 
 export default function Rules() {
-    return <View style={styles.container}/>
+    return <SafeAreaView><View style={styles.container}/></SafeAreaView>
 }
 
 

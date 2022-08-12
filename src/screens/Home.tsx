@@ -1,37 +1,55 @@
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import Button from "../components/Button";
 import { Spacer } from "../styling/spacers";
 
-/** TODO
- * - add Base page or something to all screens
- * - add formatter
- *  */
-
-export default function Home() {
-    return <View style={styles.container}>
-        <View style={styles.buttonsContainer}>
-            <Button label={"Start"} onPress={() => {}}/>
-            <Button label={"Rules"} onPress={() => {}}/>
-            <Button label={"Settings"} onPress={() => {}}/>
-        </View>
-    </View>
+interface HomeProps {
+  navigation: NativeStackNavigationProp<ParamListBase, "Home">;
 }
 
+export default function Home(props: HomeProps) {
+  const { navigation } = props;
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.buttonsContainer}>
+        <Button
+          label={"Start"}
+          onPress={() => {
+            navigation.navigate("GameBoard");
+          }}
+        />
+        <Button
+          label={"Rules"}
+          onPress={() => {
+            navigation.navigate("Rules");
+          }}
+        />
+        <Button
+          label={"Settings"}
+          onPress={() => {
+            navigation.navigate("Settings");
+          }}
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'pink',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    buttonsContainer: {
-        flex: 1,
-        justifyContent: 'space-around',
-        margin: Spacer.MEDIUM_24,
-        width: "60%",
-        marginVertical: "50%",
-    }
-  });
-  
+  container: {
+    flex: 1,
+    height: "100%",
+    backgroundColor: "pink",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonsContainer: {
+    flex: 1,
+    justifyContent: "space-around",
+    margin: Spacer.MEDIUM_24,
+    marginTop: "30%",
+    width: "60%",
+  },
+});
