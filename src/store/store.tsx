@@ -22,7 +22,7 @@ enum ActionType {
 
 const initialState = {
   cards: new Set(Cards),
-  currentCard: undefined,
+  currentCard: Cards[0],
 };
 
 export const AppContext = createContext<ContextState>({
@@ -34,7 +34,6 @@ const { Provider } = AppContext;
 
 const reducer = (state: State, action: Action): State => {
   const { type, payload } = action;
-
   switch (type) {
     case ActionType.SELECT_CARD:
       state.cards.delete(payload);
@@ -51,5 +50,6 @@ const reducer = (state: State, action: Action): State => {
 
 export const AppProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  console.warn(state);
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };
