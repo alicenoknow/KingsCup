@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { TouchableOpacity, View, StyleSheet, Modal, Text } from "react-native";
-import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
+import { getCardRule } from "../utils/cards";
 import Button from "./Button";
 
 // TODO: format spacers heights etc and this file styling
@@ -29,7 +29,9 @@ export default function HelpIcon() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{currentCard.rule}</Text>
+            <Text style={styles.modalText}>
+              {getCardRule(currentCard.name)}
+            </Text>
             <Button
               style={[styles.button, styles.buttonClose]}
               label={"ok"}

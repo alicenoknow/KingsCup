@@ -16,7 +16,7 @@ type Action = {
   payload: Card;
 };
 
-enum ActionType {
+export enum ActionType {
   SELECT_CARD = "SELECT_CARD",
 }
 
