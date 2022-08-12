@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
 import { ActionType, AppContext } from "../store/store";
-import { getNewCard } from "../utils/cards";
+import { getNewCard } from "../utils/selection";
 
 export default function GameBoard() {
   const {
@@ -13,12 +14,14 @@ export default function GameBoard() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Card /> */}
+      {currentCard && <ActionCard card={currentCard} />}
       <Button
         label="Next"
         onPress={() => {
           const newCard = getNewCard(cards);
-          dispatch({ type: ActionType.SELECT_CARD, payload: newCard });
+          if (newCard) {
+            dispatch({ type: ActionType.SELECT_CARD, payload: newCard });
+          }
         }}
       />
     </SafeAreaView>

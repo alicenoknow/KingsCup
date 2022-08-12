@@ -50,6 +50,5 @@ const reducer = (state: State, action: Action): State => {
 
 export const AppProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.warn(state);
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };

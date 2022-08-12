@@ -3,7 +3,7 @@ import { TouchableOpacity, View, StyleSheet, Modal, Text } from "react-native";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
-import { getCardRule } from "../utils/cards";
+import { getCardRule } from "../utils/rules";
 import Button from "./Button";
 
 // TODO: format spacers heights etc and this file styling
