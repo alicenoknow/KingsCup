@@ -4,9 +4,10 @@ import React from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import Button from "../components/Button";
 import { Spacer } from "../styling/spacers";
+import { Screens } from "./types";
 
 interface HomeProps {
-  navigation: NativeStackNavigationProp<ParamListBase, "Home">;
+  navigation: NativeStackNavigationProp<ParamListBase, Screens.HOME>;
 }
 
 export default function Home(props: HomeProps) {
@@ -17,19 +18,19 @@ export default function Home(props: HomeProps) {
         <Button
           label={"Start"}
           onPress={() => {
-            navigation.navigate("GameBoard");
+            navigation.navigate(Screens.GAME_BOARD);
           }}
         />
         <Button
           label={"Rules"}
           onPress={() => {
-            navigation.navigate("Rules");
+            navigation.navigate(Screens.RULES);
           }}
         />
         <Button
           label={"Settings"}
           onPress={() => {
-            navigation.navigate("Settings");
+            navigation.navigate(Screens.SETTINGS);
           }}
         />
       </View>
