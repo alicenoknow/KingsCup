@@ -1,5 +1,5 @@
 import { createContext, useReducer, Dispatch } from "react";
-import { Card, Cards } from "../utils/cards";
+import { Card, CardName, Cards } from "../utils/cards";
 
 interface State {
   cards: Set<Card>;
@@ -22,7 +22,7 @@ export enum ActionType {
 
 const initialState = {
   cards: new Set(Cards),
-  currentCard: Cards[0],
+  currentCard: undefined,
 };
 
 export const AppContext = createContext<ContextState>({

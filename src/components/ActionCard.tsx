@@ -1,18 +1,20 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, StyleProp, ViewStyle } from "react-native";
 import Animated, { SlideInDown } from "react-native-reanimated";
+import { AnimatedStyle } from "react-native-reanimated/lib/types/lib/reanimated2/commonTypes";
 import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
 import { Card } from "../utils/cards";
 
 interface CardProps {
   card: Card;
+  style: any; // TODO
 }
 
 export default function ActionCard(props: CardProps) {
-  const { card } = props;
+  const { card, style } = props;
   return (
-    <Animated.View entering={SlideInDown}>
+    <Animated.View style={style} entering={SlideInDown}>
       <Image
         source={card.img}
         style={{
