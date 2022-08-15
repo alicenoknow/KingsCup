@@ -10,12 +10,12 @@ import Button from "./Button";
 
 export default function HelpIcon() {
   const {
-    state: { currentCard },
+    state: { currentIndex, cards },
   } = useContext(AppContext);
   const [isInfoVisible, setInfoVisibility] = useState<boolean>(false);
 
   const cardInfoModal = () => {
-    if (!currentCard) {
+    if (!currentIndex) {
       return null;
     }
     return (
@@ -30,7 +30,7 @@ export default function HelpIcon() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              {getCardRule(currentCard.name)}
+              {getCardRule(cards[currentIndex].name)}
             </Text>
             <Button
               style={[styles.button, styles.buttonClose]}
@@ -91,13 +91,14 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
+    minWidth: 50,
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#F596FF",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#4397F5",
   },
   modalText: {
     marginBottom: 15,

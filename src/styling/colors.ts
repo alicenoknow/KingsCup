@@ -3,6 +3,6 @@
 export enum Colors {
     black = 'black',
     white = 'white',
-    blue = 'slateblue',
+    blue = '#4455ff',
     pink = 'pink'
 }

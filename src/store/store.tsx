@@ -1,9 +1,11 @@
 import { createContext, useReducer, Dispatch } from "react";
-import { Card, CardName, Cards } from "../utils/cards";
+import { Card, Cards } from "../utils/cards";
+import { shuffleCards } from "../utils/shuffle";
 
 interface State {
-  cards: Set<Card>;
-  currentCard: Card | undefined;
+  isGameOver: boolean;
+  cards: ReadonlyArray<Card>;
+  currentIndex: number | undefined;
 }
 
 interface ContextState {
@@ -11,18 +13,30 @@ interface ContextState {
   dispatch: Dispatch<Action>;
 }
 
-type Action = {
-  type: ActionType.SELECT_CARD;
-  payload: Card;
-};
-
 export enum ActionType {
-  SELECT_CARD = "SELECT_CARD",
+  SHUFFLE_DECK = "SHUFFLE_DECK",
+  CHANGE_GAME_STATE = "CHANGE_GAME_STATE",
+  NEXT_CARD = "NEXT_CARD",
 }
 
-const initialState = {
-  cards: new Set(Cards),
-  currentCard: undefined,
+export type Action =
+  | {
+      type: ActionType.SHUFFLE_DECK;
+      payload: undefined;
+    }
+  | {
+      type: ActionType.CHANGE_GAME_STATE;
+      payload: boolean;
+    }
+  | {
+      type: ActionType.NEXT_CARD;
+      payload: undefined;
+    };
+
+const initialState: State = {
+  isGameOver: false,
+  cards: shuffleCards(Cards),
+  currentIndex: Cards.length - 1,
 };
 
 export const AppContext = createContext<ContextState>({
@@ -33,15 +47,25 @@ export const AppContext = createContext<ContextState>({
 const { Provider } = AppContext;
 
 const reducer = (state: State, action: Action): State => {
-  const { type, payload } = action;
-  switch (type) {
-    case ActionType.SELECT_CARD:
-      state.cards.delete(payload);
-      const newState: State = {
-        cards: state.cards,
-        currentCard: payload,
+  switch (action.type) {
+    case ActionType.SHUFFLE_DECK:
+      return {
+        isGameOver: false,
+        cards: shuffleCards(Cards),
+        currentIndex: state.cards.length - 1,
       };
-      return newState;
+    case ActionType.CHANGE_GAME_STATE:
+      return {
+        ...state,
+        isGameOver: action.payload,
+      };
+    case ActionType.NEXT_CARD:
+      return {
+        ...state,
+        currentIndex: state.currentIndex
+          ? state.currentIndex - 1
+          : state.cards.length - 1,
+      };
     default:
       console.warn("ERROR :: Unknown action in reducer");
       return state;

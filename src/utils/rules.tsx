@@ -18,19 +18,19 @@ export function getCardRule(cardName: CardName) {
     case CardName.DIAMOND4:
     case CardName.SPADE4:
     case CardName.HEART4:
-      return "4-hoe - all the ladies drink";
+      return "4-hoe - all ladies drink";
 
     case CardName.CLUB5:
     case CardName.DIAMOND5:
     case CardName.SPADE5:
     case CardName.HEART5:
-      return "5-drive - start the car and turn the wheel in chosen direction, if next person wants to continue the drive, then say 'BEEP' and turn the wheel in the same direction, if next person wants to change the direction, then say 'TOOT' and turn the will in opposite direction, the one who get confused, drinks";
+      return "5-drive - start the car and turn the wheel in chosen direction, if next person wants to continue the drive, then say 'TOOT' and turn the wheel in the same direction, if next person wants to change the direction, then say 'BEEP' and turn the will in opposite direction, the one who get confused, drinks";
 
     case CardName.CLUB6:
     case CardName.DIAMOND6:
     case CardName.SPADE6:
     case CardName.HEART6:
-      return "6-dicks - all the guys drink";
+      return "6-dicks - all guys drink";
 
     case CardName.CLUB7:
     case CardName.DIAMOND7:

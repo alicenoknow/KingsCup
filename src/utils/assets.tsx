@@ -1,3 +1,7 @@
+export const CARD_WIDTH = 500;
+export const CARD_HEIGHT = 726;
+export const CARD_ASPECT_RATIO = CARD_HEIGHT / CARD_WIDTH;
+
 export { default as Club2 } from "king_app/assets/cards/2_of_clubs.png";
 export { default as Diamond2 } from "king_app/assets/cards/2_of_diamonds.png";
 export { default as Spade2 } from "king_app/assets/cards/2_of_spades.png";
@@ -59,3 +63,4 @@ export { default as SpadeA } from "king_app/assets/cards/ace_of_spades.png";
 export { default as HeartA } from "king_app/assets/cards/ace_of_hearts.png";
 
 export { default as King } from "king_app/assets/cards/king_of_spades2.png";
+export { default as Back } from "king_app/assets/cards/back.png";
