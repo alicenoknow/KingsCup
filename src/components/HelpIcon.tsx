@@ -33,7 +33,8 @@ export default function HelpIcon() {
               {getCardRule(cards[currentIndex].name)}
             </Text>
             <Button
-              style={[styles.button, styles.buttonClose]}
+              style={styles.button}
+              textStyle={styles.buttonText}
               label={"ok"}
               onPress={() => setInfoVisibility(false)}
             />
@@ -91,14 +92,12 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
-    minWidth: 50,
     elevation: 2,
+    backgroundColor: "pink",
+    paddingHorizontal: 16,
   },
-  buttonOpen: {
-    backgroundColor: "#F596FF",
-  },
-  buttonClose: {
-    backgroundColor: "#4397F5",
+  buttonText: {
+    fontSize: 16,
   },
   modalText: {
     marginBottom: 15,

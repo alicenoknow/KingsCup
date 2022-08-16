@@ -3,7 +3,7 @@ import { Card, Cards } from "../utils/cards";
 import { shuffleCards } from "../utils/shuffle";
 
 interface State {
-  isGameOver: boolean;
+  gameState: GameState;
   cards: ReadonlyArray<Card>;
   currentIndex: number | undefined;
 }
@@ -11,6 +11,12 @@ interface State {
 interface ContextState {
   state: State;
   dispatch: Dispatch<Action>;
+}
+
+export enum GameState {
+  START = "START",
+  IN_PROGRESS = "IN_PROGRESS",
+  KING = "KING",
 }
 
 export enum ActionType {
@@ -26,7 +32,7 @@ export type Action =
     }
   | {
       type: ActionType.CHANGE_GAME_STATE;
-      payload: boolean;
+      payload: GameState;
     }
   | {
       type: ActionType.NEXT_CARD;
@@ -34,7 +40,7 @@ export type Action =
     };
 
 const initialState: State = {
-  isGameOver: false,
+  gameState: GameState.START,
   cards: shuffleCards(Cards),
   currentIndex: Cards.length - 1,
 };
@@ -50,14 +56,14 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.SHUFFLE_DECK:
       return {
-        isGameOver: false,
+        gameState: GameState.START,
         cards: shuffleCards(Cards),
         currentIndex: state.cards.length - 1,
       };
     case ActionType.CHANGE_GAME_STATE:
       return {
         ...state,
-        isGameOver: action.payload,
+        gameState: action.payload,
       };
     case ActionType.NEXT_CARD:
       return {
@@ -65,6 +71,7 @@ const reducer = (state: State, action: Action): State => {
         currentIndex: state.currentIndex
           ? state.currentIndex - 1
           : state.cards.length - 1,
+        gameState: GameState.IN_PROGRESS,
       };
     default:
       console.warn("ERROR :: Unknown action in reducer");

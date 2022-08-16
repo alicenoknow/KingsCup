@@ -11,16 +11,16 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { snapPoint } from "react-native-redash";
-import { ActionType, AppContext } from "../store/store";
+import { ActionType, AppContext, GameState } from "../store/store";
 import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 import { Card, CardName } from "../utils/cards";
 import CardContent from "./CardContent";
 
 const { width, height } = Dimensions.get("window");
 
-const HORIZONTAL_SNAP_POINTS = [-width, 0, width];
-const HEADER_OFFSET = 50;
-const VERTICAL_SNAP_POINTS = [-height - HEADER_OFFSET, 0, height];
+const HIDE_OFFSET = 0;
+const HORIZONTAL_SNAP_POINTS = [-width - HIDE_OFFSET, 0, width + HIDE_OFFSET];
+const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
 const SLIDE_IN_DURATION = 100;
 const MAX_ANGLE = 10;
 
@@ -33,25 +33,34 @@ interface CardProps {
 
 const ActionCard = ({ card: { img, name }, index }: CardProps) => {
   const {
-    state: { currentIndex, isGameOver },
+    state: { currentIndex, gameState },
     dispatch,
   } = useContext(AppContext);
   const offset = useSharedValue({ x: 0, y: 0 });
   const translateX = useSharedValue(0);
-  const translateY = useSharedValue(-height - HEADER_OFFSET);
+  const translateY = useSharedValue(-height - HIDE_OFFSET);
   const scale = useSharedValue(1);
   const rotateZ = useSharedValue(0);
   const delay = index * SLIDE_IN_DURATION;
   const theta = -MAX_ANGLE + Math.random() * 2 * MAX_ANGLE;
 
   useEffect(() => {
-    translateY.value = withDelay(
-      delay,
-      withTiming(0, {
-        duration: SLIDE_IN_DURATION,
-        easing: Easing.ease,
-      })
-    );
+    if (gameState === GameState.START) {
+      translateY.value = withDelay(
+        delay,
+        withTiming(0, {
+          duration: SLIDE_IN_DURATION,
+          easing: Easing.ease,
+        })
+      );
+      translateX.value = withDelay(
+        delay,
+        withTiming(0, {
+          duration: SLIDE_IN_DURATION,
+          easing: Easing.ease,
+        })
+      );
+    }
     rotateZ.value = withDelay(delay, withSpring(theta));
   }, [index, translateY, rotateZ, delay, theta]);
 
@@ -59,7 +68,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
     if (index === currentIndex && name === CardName.KING) {
       dispatch({
         type: ActionType.CHANGE_GAME_STATE,
-        payload: true,
+        payload: GameState.KING,
       });
     }
   }, [currentIndex]);
@@ -67,7 +76,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
   const gesture = Gesture.Pan()
     .runOnJS(true)
     .onBegin(() => {
-      if (index !== currentIndex || isGameOver) {
+      if (index !== currentIndex || gameState === GameState.KING) {
         return;
       }
       offset.value.x = translateX.value;
@@ -76,41 +85,35 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
       scale.value = withTiming(1.1);
     })
     .onUpdate(({ translationX, translationY }) => {
-      if (index !== currentIndex || isGameOver) {
+      if (index !== currentIndex || gameState === GameState.KING) {
         return;
       }
       translateX.value = offset.value.x + translationX;
       translateY.value = offset.value.y + translationY;
     })
     .onEnd(({ velocityX, velocityY }) => {
+      if (index !== currentIndex || gameState === GameState.KING) {
+        return;
+      }
       const destX = snapPoint(
         translateX.value,
         velocityX,
         HORIZONTAL_SNAP_POINTS
       );
+      const destY = snapPoint(
+        translateY.value,
+        velocityY,
+        VERTICAL_SNAP_POINTS
+      );
 
-      if (destX) {
-        translateX.value = withSpring(destX, { velocity: velocityX });
-        translateY.value = withSpring(0, { velocity: velocityY });
+      if (destX || destY) {
         dispatch({
           type: ActionType.NEXT_CARD,
           payload: undefined,
         });
-      } else {
-        const destY = snapPoint(
-          translateY.value,
-          velocityY,
-          VERTICAL_SNAP_POINTS
-        );
-        if (destY) {
-          dispatch({
-            type: ActionType.NEXT_CARD,
-            payload: undefined,
-          });
-        }
-        translateX.value = withSpring(0, { velocity: velocityX });
-        translateY.value = withSpring(destY, { velocity: velocityY });
       }
+      translateX.value = withSpring(destX, { velocity: velocityX });
+      translateY.value = withSpring(destY, { velocity: velocityY });
     });
 
   const style = useAnimatedStyle(() => ({

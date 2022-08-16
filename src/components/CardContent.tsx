@@ -43,6 +43,10 @@ export default function CardContent({ index, front, style }: CardContentProps) {
       rotateYAsDeg.value = withTiming(0, { duration: 300 });
       backOpacity.value = withTiming(0, { duration: 300 });
       frontOpacity.value = withTiming(1, { duration: 300 });
+    } else if (currentIndex && currentIndex > index) {
+      rotateYAsDeg.value = 180;
+      backOpacity.value = 1;
+      frontOpacity.value = 0;
     }
   }, [currentIndex]);
 
