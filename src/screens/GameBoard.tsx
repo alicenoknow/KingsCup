@@ -1,18 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
-import {
-  GestureHandlerRootView,
-  PanGestureHandler,
-  State,
-} from "react-native-gesture-handler";
-import Animated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import React, { useContext } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import Animated from "react-native-reanimated";
 import { Context } from "react-native-reanimated/lib/types/lib/reanimated2/hook/commonTypes";
 import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";

@@ -3,11 +3,6 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { StyleSheet, Image, Dimensions, Platform } from "react-native";
 import Animated, {
-  and,
-  concat,
-  cond,
-  greaterOrEq,
-  lessThan,
   useAnimatedStyle,
   useSharedValue,
   withTiming,

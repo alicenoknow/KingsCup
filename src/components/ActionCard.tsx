@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
-import { View, StyleSheet, Dimensions, Image } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, {
+import {
   Easing,
   useAnimatedStyle,
   useSharedValue,
@@ -12,7 +12,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { snapPoint } from "react-native-redash";
 import { ActionType, AppContext, GameState } from "../store/store";
-import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 import { Card, CardName } from "../utils/cards";
 import CardContent from "./CardContent";
 
