@@ -63,5 +63,6 @@ const styles = StyleSheet.create({
   },
   gameOverButton: {
     marginTop: CARD_HEIGHT - 200,
+    paddingHorizontal: 16,
   },
 });
