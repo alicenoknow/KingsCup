@@ -10,6 +10,7 @@ import React, { Context } from "react";
 import HelpIcon from "./src/components/HelpIcon";
 import { AppProvider } from "./src/store/store";
 import { Screens } from "./src/screens/types";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const commonScreenOptions = {
   headerTransparent: true,
@@ -28,7 +29,10 @@ export default function App() {
           <Stack.Screen
             name={Screens.GAME_BOARD}
             component={GameBoard}
-            options={{ headerRight: () => <HelpIcon /> }}
+            options={{
+              headerRight: () => <HelpIcon />,
+              headerTintColor: Colors.white,
+            }}
           />
           <Stack.Screen name={Screens.RULES} component={Rules} />
         </Stack.Navigator>

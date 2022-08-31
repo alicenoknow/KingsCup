@@ -46,20 +46,31 @@ export default function HelpIcon() {
 
   return (
     <TouchableOpacity onPress={() => setInfoVisibility(!isInfoVisible)}>
-      <View style={styles.icon} />
+      <View style={styles.icon}>
+        <Text style={styles.text}>?</Text>
+      </View>
       {cardInfoModal()}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  text: {
+    color: Colors.white,
+    fontSize: 21,
+    fontWeight: "800",
+    textAlign: "center",
+  },
   icon: {
-    backgroundColor: Colors.blue,
-    color: Colors.black,
-    borderRadius: Spacer.SMALL_8,
-    margin: Spacer.SMALL_8,
-    height: 30,
-    width: 30,
+    backgroundColor: "transparent",
+    color: Colors.white,
+    borderRadius: Spacer.MEDIUM_24,
+    borderColor: Colors.white,
+    borderWidth: 3,
+    height: 40,
+    width: 40,
+    justifyContent: "center",
+    alignContent: "center",
   },
   modal: {
     flex: 1,
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: "pink",
+    backgroundColor: Colors.pink,
     paddingHorizontal: 16,
   },
   buttonText: {

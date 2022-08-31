@@ -5,6 +5,7 @@ import { Context } from "react-native-reanimated/lib/types/lib/reanimated2/hook/
 import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
 import { ActionType, AppContext, GameState } from "../store/store";
+import { Colors } from "../styling/colors";
 import { CARD_HEIGHT } from "../utils/assets";
 import { Card } from "../utils/cards";
 
@@ -41,7 +42,7 @@ export default function GameBoard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
+    backgroundColor: Colors.background,
     alignItems: "center",
     justifyContent: "center",
   },

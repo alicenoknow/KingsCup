@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import Button from "../components/Button";
+import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
 import { Screens } from "./types";
 
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: "100%",
-    backgroundColor: "pink",
+    backgroundColor: Colors.background,
     alignItems: "center",
     justifyContent: "center",
   },

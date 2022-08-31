@@ -42,7 +42,7 @@ export type Action =
 const initialState: State = {
   gameState: GameState.START,
   cards: shuffleCards(Cards),
-  currentIndex: Cards.length - 1,
+  currentIndex: Cards.length,
 };
 
 export const AppContext = createContext<ContextState>({
@@ -58,7 +58,7 @@ const reducer = (state: State, action: Action): State => {
       return {
         gameState: GameState.START,
         cards: shuffleCards(Cards),
-        currentIndex: state.cards.length - 1,
+        currentIndex: state.cards.length,
       };
     case ActionType.CHANGE_GAME_STATE:
       return {

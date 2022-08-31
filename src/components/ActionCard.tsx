@@ -81,7 +81,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
       offset.value.x = translateX.value;
       offset.value.y = translateY.value;
       rotateZ.value = withTiming(0);
-      scale.value = withTiming(1.1);
+      scale.value = withTiming(1.3);
     })
     .onUpdate(({ translationX, translationY }) => {
       if (index !== currentIndex || gameState === GameState.KING) {

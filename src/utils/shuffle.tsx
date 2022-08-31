@@ -1,4 +1,4 @@
-import { Card } from "./cards";
+import { Card, RulesCard } from "./cards";
 
 export function shuffleCards(cards: ReadonlyArray<Card>) {
   const cardsCount = cards.length;
@@ -10,6 +10,7 @@ export function shuffleCards(cards: ReadonlyArray<Card>) {
     ...shuffledCards.slice(0, kingsIndex),
     kingCard,
     ...shuffledCards.slice(kingsIndex),
+    RulesCard,
   ];
 }
 

@@ -76,7 +76,8 @@ export function getCardRule(cardName: CardName) {
 
     case CardName.KING:
       return "Game over - drink the King's cup!";
-
+    case CardName.RULES:
+      return "Swipe out rules card to start the game!";
     default:
       "Oops, idk";
   }

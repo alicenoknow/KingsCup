@@ -64,3 +64,4 @@ export { default as HeartA } from "king_app/assets/cards/ace_of_hearts.png";
 
 export { default as King } from "king_app/assets/cards/king_of_spades2.png";
 export { default as Back } from "king_app/assets/cards/back.png";
+export { default as RulesCard } from "king_app/assets/cards/rules.png";
