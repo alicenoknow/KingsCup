@@ -56,16 +56,16 @@ export default function HelpIcon() {
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.white,
+    color: Colors.primaryText,
     fontSize: 21,
     fontWeight: "800",
     textAlign: "center",
   },
   icon: {
     backgroundColor: "transparent",
-    color: Colors.white,
+    color: Colors.primaryText,
     borderRadius: Spacer.MEDIUM_24,
-    borderColor: Colors.white,
+    borderColor: Colors.primaryText,
     borderWidth: 3,
     height: 40,
     width: 40,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 16,
   },
   buttonText: {
+    color: Colors.secondaryText,
     fontSize: 16,
   },
   modalText: {

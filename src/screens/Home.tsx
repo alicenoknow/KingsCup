@@ -1,7 +1,7 @@
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { View, StyleSheet, SafeAreaView, Text } from "react-native";
 import Button from "../components/Button";
 import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
@@ -18,23 +18,20 @@ export default function Home(props: HomeProps) {
       <View style={styles.buttonsContainer}>
         <Button
           label={"Start"}
+          style={styles.button}
           onPress={() => {
             navigation.navigate(Screens.GAME_BOARD);
           }}
         />
         <Button
           label={"Rules"}
+          style={styles.button}
           onPress={() => {
             navigation.navigate(Screens.RULES);
           }}
         />
-        <Button
-          label={"Settings"}
-          onPress={() => {
-            navigation.navigate(Screens.SETTINGS);
-          }}
-        />
       </View>
+      <Text style={styles.bottom}>created by alicenoknow</Text>
     </SafeAreaView>
   );
 }
@@ -49,9 +46,14 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flex: 1,
-    justifyContent: "space-around",
     margin: Spacer.MEDIUM_24,
     marginTop: "30%",
     width: "60%",
+  },
+  button: {
+    marginVertical: 20,
+  },
+  bottom: {
+    color: Colors.primaryText,
   },
 });
