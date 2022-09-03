@@ -23,7 +23,27 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
     setCustomRules,
   } = useContext(AppContext);
 
-  const [customAction, setCustomAction] = useState<string>("");
+  const [customAction, setCustomAction] = useState<string>(
+    customRules[cards[0]] || ""
+  );
+  const [isActionConfirmed, setActionConfirmed] = useState<boolean>(false);
+
+  const confirmNewRule = () => {
+    const newRules = customRules || {};
+    for (const card of cards) {
+      newRules[card] = customAction;
+    }
+    setCustomRules(newRules);
+    setActionConfirmed(true);
+  };
+
+  const onValueChange = (value: string) => {
+    setCustomAction(value);
+
+    if (isActionConfirmed) {
+      setActionConfirmed(false);
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
@@ -44,21 +64,15 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
       </Text>
       <TextInput
         style={styles.input}
-        onChangeText={setCustomAction}
+        onChangeText={onValueChange}
         value={customAction}
         multiline
       />
       <Button
-        label={"Confirm"}
-        style={styles.button}
+        label={isActionConfirmed ? "Saved" : "Confirm"}
+        style={[styles.button, { opacity: isActionConfirmed ? 0.7 : 1 }]}
         textStyle={styles.buttonText}
-        onPress={() => {
-          const newRules = customRules || {};
-          for (const card of cards) {
-            newRules[card] = customAction;
-          }
-          setCustomRules(newRules);
-        }}
+        onPress={confirmNewRule}
       />
     </SafeAreaView>
   );
@@ -93,6 +107,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     backgroundColor: Colors.button,
     padding: 10,
+    width: 130,
   },
   buttonText: {
     color: Colors.buttonText,
