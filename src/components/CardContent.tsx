@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { AppContext } from "../store/store";
+import { AppContext, GameState } from "../store/store";
 import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 
 const { width } = Dimensions.get("window");
@@ -26,7 +26,7 @@ interface CardContentProps {
 
 export default function CardContent({ index, front, style }: CardContentProps) {
   const {
-    state: { currentIndex },
+    state: { currentIndex, gameState },
   } = useContext(AppContext);
 
   const rotateYAsDeg = useSharedValue(180);
@@ -38,12 +38,16 @@ export default function CardContent({ index, front, style }: CardContentProps) {
       rotateYAsDeg.value = withTiming(0, { duration: 300 });
       backOpacity.value = withTiming(0, { duration: 300 });
       frontOpacity.value = withTiming(1, { duration: 300 });
-    } else if (currentIndex && currentIndex > index) {
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    if (gameState === GameState.START && index !== currentIndex) {
       rotateYAsDeg.value = 180;
       backOpacity.value = 1;
       frontOpacity.value = 0;
     }
-  }, [currentIndex]);
+  }, [gameState]);
 
   const backCardStyle = useAnimatedStyle(() => ({
     opacity: backOpacity.value,

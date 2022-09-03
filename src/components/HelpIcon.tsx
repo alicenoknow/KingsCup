@@ -3,6 +3,7 @@ import { TouchableOpacity, View, StyleSheet, Modal, Text } from "react-native";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Spacer } from "../styling/spacers";
+import { getOnBackgroundColor } from "../styling/themeHelper";
 import { getCardRule } from "../utils/rules";
 import Button from "./Button";
 
@@ -10,7 +11,7 @@ import Button from "./Button";
 
 export default function HelpIcon() {
   const {
-    state: { currentIndex, cards },
+    state: { currentIndex, cards, isLightTheme, useCustomRules, customRules },
   } = useContext(AppContext);
   const [isInfoVisible, setInfoVisibility] = useState<boolean>(false);
 
@@ -18,6 +19,12 @@ export default function HelpIcon() {
     if (!currentIndex) {
       return null;
     }
+
+    const ruleDescription =
+      useCustomRules && customRules[cards[currentIndex]?.name]
+        ? customRules[cards[currentIndex]?.name]
+        : getCardRule(cards[currentIndex]?.name);
+
     return (
       <Modal
         animationType="slide"
@@ -29,9 +36,7 @@ export default function HelpIcon() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              {getCardRule(cards[currentIndex].name)}
-            </Text>
+            <Text style={styles.modalText}>{ruleDescription}</Text>
             <Button
               style={styles.button}
               textStyle={styles.buttonText}
@@ -46,8 +51,13 @@ export default function HelpIcon() {
 
   return (
     <TouchableOpacity onPress={() => setInfoVisibility(!isInfoVisible)}>
-      <View style={styles.icon}>
-        <Text style={styles.text}>?</Text>
+      <View
+        style={[
+          styles.icon,
+          { borderColor: getOnBackgroundColor(isLightTheme).color },
+        ]}
+      >
+        <Text style={[styles.text, getOnBackgroundColor(isLightTheme)]}>?</Text>
       </View>
       {cardInfoModal()}
     </TouchableOpacity>
@@ -56,22 +66,20 @@ export default function HelpIcon() {
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.primaryText,
     fontSize: 21,
     fontWeight: "800",
     textAlign: "center",
   },
   icon: {
     backgroundColor: "transparent",
-    color: Colors.primaryText,
     borderRadius: Spacer.MEDIUM_24,
-    borderColor: Colors.primaryText,
     borderWidth: 3,
     height: 40,
     width: 40,
     justifyContent: "center",
     alignContent: "center",
   },
+
   modal: {
     flex: 1,
     width: 300,
@@ -104,11 +112,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.button,
     paddingHorizontal: 16,
   },
   buttonText: {
-    color: Colors.secondaryText,
+    color: Colors.buttonText,
     fontSize: 16,
   },
   modalText: {

@@ -1,79 +1,65 @@
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useContext, useState } from "react";
-import { useEffect } from "react";
-import { View, StyleSheet, SafeAreaView, Text } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
-import { getUseCustomInfo, storeUseCustomInfo } from "../store/asyncstore";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  LayoutChangeEvent,
+} from "react-native";
+import CardsList from "../components/CardsList";
+import { UseCustomToggleButton } from "../components/UseCustomToggleButton";
+import { ActionType, AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
+import {
+  getBackgroundColor,
+  getOnBackgroundColor,
+} from "../styling/themeHelper";
 import { Screens } from "./types";
 
-const cardsShorts = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "J",
-  "Q",
-  "K",
-  "A",
-];
 interface RulesProps {
   navigation: NativeStackNavigationProp<ParamListBase, Screens.RULES>;
+  headerHeight: number;
 }
 
 export default function Rules({ navigation }: RulesProps) {
-  const [useCustom, setUseCustom] = useState<boolean | null>();
+  const {
+    state: { isLightTheme, useCustomRules },
+    setUseCustom,
+  } = useContext(AppContext);
 
-  useEffect(() => {
-    const getRules = async () => {
-      const useCustomInfo = await getUseCustomInfo();
-      setUseCustom(useCustomInfo);
-    };
-    getRules();
-  }, []);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
 
-  const renderItem = ({ item, index }: { item: string; index: number }) => {
-    return (
-      <>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate(Screens.RULES_DETAILS, {})}
-        >
-          <Text style={styles.text}>{item}</Text>
-        </TouchableOpacity>
-        {index !== cardsShorts.length - 1 && <View style={styles.divider} />}
-      </>
-    );
+  const handleChange = (value: boolean) => {
+    setUseCustom(value);
   };
 
-  const onSwitch = () => {
-    const newValue = !useCustom;
-    setUseCustom(newValue);
-    storeUseCustomInfo(newValue);
-  };
-
+  const textStyle = getOnBackgroundColor(isLightTheme);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Set custom rules</Text>
-      <Text style={styles.subtitle}>or just check out existing ones</Text>
-      <Text style={styles.statusText}>
-        {useCustom
-          ? "You're now using default set of rules"
-          : "You're now using custom set of rules"}
-      </Text>
-      <TouchableOpacity style={styles.switch} onPress={onSwitch}>
-        <Text style={[styles.statusText, styles.white]}>Switch 🔁</Text>
-      </TouchableOpacity>
-      <FlatList
-        data={cardsShorts.map((name) => ` ♥️♠️ ${name} ♦️♣️`)}
-        renderItem={renderItem}
-      />
+    <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
+      <View
+        onLayout={(event: LayoutChangeEvent) => {
+          setHeaderHeight(event.nativeEvent.layout.height);
+        }}
+      >
+        <Text style={[styles.title, textStyle]}>Actions</Text>
+        <Text style={[styles.subtitle, textStyle]}>
+          tap on card to see default action or change it to custom one
+        </Text>
+        <View style={styles.toggle}>
+          <UseCustomToggleButton
+            value={useCustomRules}
+            onChange={handleChange}
+          />
+          <Text style={[styles.statusText, textStyle]}>
+            {useCustomRules
+              ? "custom actions enabled"
+              : "custom actions disabled"}
+          </Text>
+        </View>
+      </View>
+      <CardsList headerHeight={headerHeight} navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -81,12 +67,10 @@ export default function Rules({ navigation }: RulesProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
     width: "100%",
   },
   content: {
     width: "100%",
-    backgroundColor: "pink",
   },
   item: {
     width: "100%",
@@ -102,27 +86,31 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
   },
-  switch: {
-    padding: 10,
-    backgroundColor: Colors.secondary,
-    borderRadius: 20,
-    marginHorizontal: "30%",
-    marginVertical: 10,
-    color: Colors.white,
-  },
   title: {
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    marginVertical: 8,
   },
   subtitle: {
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 24,
+    marginHorizontal: 24,
+    flexWrap: "wrap",
   },
   statusText: {
     textAlign: "center",
+    justifyContent: "center",
+    textAlignVertical: "center",
+    paddingHorizontal: 5,
   },
-  white: {
-    color: Colors.secondaryText,
+  buttonText: {
+    color: Colors.buttonText,
+  },
+  toggle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    margin: 24,
   },
 });

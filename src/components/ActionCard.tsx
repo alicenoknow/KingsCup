@@ -45,6 +45,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
 
   useEffect(() => {
     if (gameState === GameState.START) {
+      scale.value = 1;
       translateY.value = withDelay(
         delay,
         withTiming(0, {
@@ -61,7 +62,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
       );
     }
     rotateZ.value = withDelay(delay, withSpring(theta));
-  }, [index, translateY, rotateZ, delay, theta]);
+  }, [index, gameState, translateY, rotateZ, delay, theta]);
 
   useEffect(() => {
     if (index === currentIndex && name === CardName.KING) {

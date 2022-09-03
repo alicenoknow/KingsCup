@@ -14,7 +14,7 @@ export const storeUseCustomInfo = async (value: boolean) => {
 };
 
 export const storeCustomRulesSetData = async (
-  value: { [key in CardName]: string }
+  value: { [key in CardName]?: string }
 ) => {
   try {
     const jsonValue = JSON.stringify(value);
