@@ -23,8 +23,6 @@ const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
 const SLIDE_IN_DURATION = 100;
 const MAX_ANGLE = 10;
 
-// TODO fix cards coimnig back
-
 interface CardProps {
   card: Card;
   index: number;

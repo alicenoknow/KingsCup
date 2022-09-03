@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
 import Button from "../components/Button";
-import { ActionType, AppContext } from "../store/store";
+import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import {
   getBackgroundColor,

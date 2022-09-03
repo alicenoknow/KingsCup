@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
   TouchableOpacity,
@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  StatusBar,
 } from "react-native";
 import Animated, {
   Extrapolation,
@@ -16,9 +15,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { Colors } from "../styling/colors";
 import { CardName } from "../utils/cards";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Screens } from "../screens/types";
 
 function getIcon(index: number): string {
   switch (index % 4) {

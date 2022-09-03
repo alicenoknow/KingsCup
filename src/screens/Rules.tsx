@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import CardsList from "../components/CardsList";
 import { UseCustomToggleButton } from "../components/UseCustomToggleButton";
-import { ActionType, AppContext } from "../store/store";
+import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import {
   getBackgroundColor,

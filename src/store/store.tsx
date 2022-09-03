@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { set } from "react-native-reanimated";
 import { Card, CardName, Cards } from "../utils/cards";
 import { shuffleCards } from "../utils/shuffle";
 import {
@@ -129,6 +128,20 @@ export const AppProvider: React.FC<React.ReactNode> = ({ children }) => {
     };
     fetchDataFromStorage();
   }, []);
+
+  useEffect(() => {
+    const storeUseCustomData = async () => {
+      await storeUseCustomInfo(useCustomRules);
+    };
+    storeUseCustomData();
+  }, [useCustomRules]);
+
+  useEffect(() => {
+    const storeCustomRules = async () => {
+      await storeCustomRulesSetData(customRules);
+    };
+    storeCustomRules();
+  }, [customRules]);
 
   return (
     <Provider

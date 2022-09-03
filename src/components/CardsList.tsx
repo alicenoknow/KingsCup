@@ -1,7 +1,7 @@
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState } from "react";
-import { View, FlatList, StyleSheet, LayoutChangeEvent } from "react-native";
+import React from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
