@@ -2,7 +2,7 @@ import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { useContext } from "react";
-import { View, StyleSheet, SafeAreaView, Text } from "react-native";
+import { View, StyleSheet, SafeAreaView, Text, Platform } from "react-native";
 import Button from "../components/Button";
 import { ThemeToggleButton } from "../components/ThemeToggleButton";
 import { AppContext } from "../store/store";
@@ -47,7 +47,7 @@ export default function Home(props: HomeProps) {
         <ThemeToggleButton />
         <Text style={styles.text}>🌞</Text>
       </View>
-      <Text style={getOnBackgroundColor(isLightTheme)}>
+      <Text style={[styles.disclaimer, getOnBackgroundColor(isLightTheme)]}>
         created by alicenoknow
       </Text>
     </SafeAreaView>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: Platform.OS === "android" ? 30 : 0,
   },
   buttonsContainer: {
     flex: 1,
@@ -81,5 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 8,
     fontSize: 22,
+  },
+  disclaimer: {
+    paddingBottom: 32,
   },
 });

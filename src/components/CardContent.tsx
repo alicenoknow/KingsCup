@@ -52,7 +52,7 @@ export default function CardContent({ index, front, style }: CardContentProps) {
   const backCardStyle = useAnimatedStyle(() => ({
     opacity: backOpacity.value,
     transform: [
-      { perspective: perspective ?? 0 },
+      { perspective: perspective ?? 1 },
       { rotateY: "180deg" },
       { rotateY: `${rotateYAsDeg.value}deg` },
     ],
@@ -61,7 +61,7 @@ export default function CardContent({ index, front, style }: CardContentProps) {
   const frontCardStyle = useAnimatedStyle(() => ({
     opacity: frontOpacity.value,
     transform: [
-      { perspective: perspective ?? 0 },
+      { perspective: perspective ?? 1 },
       { rotateY: `${rotateYAsDeg.value}deg` },
     ],
   }));

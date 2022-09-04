@@ -1,7 +1,7 @@
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, Platform } from "react-native";
 import Animated from "react-native-reanimated";
 import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: Platform.OS === "android" ? 30 : 0,
   },
   iconContainer: {
     flex: 1,

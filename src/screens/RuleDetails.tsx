@@ -1,7 +1,13 @@
 import { RouteProp } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { useState } from "react";
-import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  TextInput,
+  Platform,
+} from "react-native";
 import Button from "../components/Button";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
@@ -82,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    paddingTop: Platform.OS === "android" ? 30 : 0,
   },
   title: {
     fontSize: 24,

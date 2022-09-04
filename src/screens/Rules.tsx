@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Text,
   LayoutChangeEvent,
+  Platform,
 } from "react-native";
 import CardsList from "../components/CardsList";
 import { UseCustomToggleButton } from "../components/UseCustomToggleButton";
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    paddingTop: Platform.OS === "android" ? 30 : 0,
   },
   content: {
     width: "100%",
@@ -90,19 +92,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 8,
+    marginVertical: 16,
+    marginBottom: 24,
   },
   subtitle: {
     textAlign: "center",
     marginBottom: 24,
     marginHorizontal: 24,
     flexWrap: "wrap",
+    fontSize: 18,
   },
   statusText: {
     textAlign: "center",
     justifyContent: "center",
     textAlignVertical: "center",
     paddingHorizontal: 5,
+    fontWeight: "bold",
+    fontSize: 18,
   },
   buttonText: {
     color: Colors.buttonText,

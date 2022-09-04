@@ -115,5 +115,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     textAlignVertical: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
