@@ -33,7 +33,6 @@ export default function Button(props: ButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.white,
     color: Colors.black,
     alignItems: "center",
     justifyContent: "center",

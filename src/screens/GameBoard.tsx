@@ -6,7 +6,11 @@ import Animated from "react-native-reanimated";
 import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
 import { ActionType, AppContext, GameState } from "../store/store";
-import { getBackgroundColor } from "../styling/themeHelper";
+import { Colors } from "../styling/colors";
+import {
+  getBackgroundColor,
+  getOnBackgroundColor,
+} from "../styling/themeHelper";
 import { CARD_HEIGHT } from "../utils/assets";
 import { Card } from "../utils/cards";
 import { Screens } from "./types";
@@ -38,6 +42,7 @@ export default function GameBoard({ navigation }: GameBoardProps) {
         {gameState === GameState.KING && (
           <Button
             style={styles.gameOverButton}
+            textStyle={styles.gameOverButtonText}
             label={"one more cup?"}
             onPress={() =>
               dispatch({ type: ActionType.SHUFFLE_DECK, payload: undefined })
@@ -63,5 +68,9 @@ const styles = StyleSheet.create({
   gameOverButton: {
     marginTop: CARD_HEIGHT - 200,
     paddingHorizontal: 16,
+    backgroundColor: Colors.button,
+  },
+  gameOverButtonText: {
+    color: Colors.buttonText,
   },
 });

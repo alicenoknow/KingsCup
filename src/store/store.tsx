@@ -125,7 +125,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       const useCustom = await getUseCustomInfo();
       const customRules = await getCustomRulesSetData();
 
-      setUseCustom(useCustom || {});
+      setUseCustom(useCustom || false);
       setCustomRules(customRules || {});
     };
     fetchDataFromStorage();

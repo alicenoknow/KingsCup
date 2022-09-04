@@ -17,7 +17,7 @@ const HORIZONTAL_MARGIN = 128;
 const CARD_WIDTH = width - HORIZONTAL_MARGIN;
 const CARD_HEIGHT = CARD_WIDTH * CARD_ASPECT_RATIO;
 
-const perspective = Platform.OS === "ios" ? 1000 : undefined;
+const perspective = Platform.OS === "ios" ? 1000 : 1;
 
 interface CardContentProps {
   front: any; //TODO
