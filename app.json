@@ -1,9 +1,10 @@
 {
   "expo": {
     "name": "king_app",
-    "slug": "king_app",
+    "slug": "kings-cup",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "alicenoknow",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -18,7 +19,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alicenoknow.kingscup"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "18487e4d-5d58-406f-89ed-29dd6fb7cd64"
+      }
     }
   }
 }

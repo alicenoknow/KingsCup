@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useReducer,
   Dispatch,
@@ -111,7 +111,9 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-export const AppProvider: React.FC<React.ReactNode> = ({ children }) => {
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [useCustomRules, setUseCustom] = useState<boolean>(false);
   const [customRules, setCustomRules] = useState<

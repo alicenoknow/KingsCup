@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { AppContext, GameState } from "../store/store";
+import { Colors } from "../styling/colors";
 import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 
 const { width } = Dimensions.get("window");
@@ -67,7 +68,13 @@ export default function CardContent({ index, front, style }: CardContentProps) {
   }));
 
   return (
-    <Animated.View style={[styles.card, style]}>
+    <Animated.View
+      style={[
+        styles.card,
+        Platform.OS === "ios" ? styles.cardIOS : styles.cardAndroid,
+        style,
+      ]}
+    >
       <Animated.View
         style={[
           StyleSheet.absoluteFillObject,
@@ -100,22 +107,28 @@ export default function CardContent({ index, front, style }: CardContentProps) {
 
 const styles = StyleSheet.create({
   card: {
+    backgroundColor: Colors.white,
     borderRadius: 10,
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
+  },
+  cardIOS: {
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.4,
-    shadowRadius: 3.8,
+    shadowRadius: 4,
     elevation: 5,
   },
+  cardAndroid: {
+    borderWidth: 2,
+    borderColor: Colors.black,
+  },
   image: {
-    backgroundColor: "white",
     width: CARD_WIDTH,
     height: CARD_WIDTH * CARD_ASPECT_RATIO,
     borderRadius: 10,
