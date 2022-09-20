@@ -12,7 +12,7 @@ export function getCardRule(cardName: CardName) {
     case CardName.DIAMOND3:
     case CardName.SPADE3:
     case CardName.HEART3:
-      return "3 for mee - you drink three sips";
+      return "3 for me - you drink three sips";
 
     case CardName.CLUB4:
     case CardName.DIAMOND4:
