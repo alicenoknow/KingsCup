@@ -70,7 +70,7 @@ export default function HelpIcon() {
 const styles = StyleSheet.create({
   text: {
     fontSize: Font.MEDIUM,
-    fontWeight: "700",
+    fontWeight: "bold",
     textAlign: "center",
   },
   icon: {
