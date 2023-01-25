@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { AppContext, GameState } from "../store/store";
 import { Colors } from "../styling/colors";
+import { Spacer } from "../styling/spacers";
 import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 
 const { width } = Dimensions.get("window");
@@ -17,7 +18,7 @@ const HORIZONTAL_MARGIN = 128;
 const CARD_WIDTH = width - HORIZONTAL_MARGIN;
 const CARD_HEIGHT = CARD_WIDTH * CARD_ASPECT_RATIO;
 
-const perspective = Platform.OS === "ios" ? 1000 : 1;
+const perspective = 1000;
 
 interface CardContentProps {
   front: any; //TODO
@@ -53,16 +54,14 @@ export default function CardContent({ index, front, style }: CardContentProps) {
   const backCardStyle = useAnimatedStyle(() => ({
     opacity: backOpacity.value,
     transform: [
-      { perspective: perspective ?? 1 },
-      { rotateY: "180deg" },
-      { rotateY: `${rotateYAsDeg.value}deg` },
+      { perspective: perspective ?? 100 },
     ],
   }));
 
   const frontCardStyle = useAnimatedStyle(() => ({
     opacity: frontOpacity.value,
     transform: [
-      { perspective: perspective ?? 1 },
+      { perspective: perspective ?? 100 },
       { rotateY: `${rotateYAsDeg.value}deg` },
     ],
   }));
@@ -108,7 +107,7 @@ export default function CardContent({ index, front, style }: CardContentProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.white,
-    borderRadius: 10,
+    borderRadius: Spacer.SMALL_8,
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     justifyContent: "center",
@@ -131,6 +130,6 @@ const styles = StyleSheet.create({
   image: {
     width: CARD_WIDTH,
     height: CARD_WIDTH * CARD_ASPECT_RATIO,
-    borderRadius: 10,
+    borderRadius: Spacer.SMALL_8,
   },
 });

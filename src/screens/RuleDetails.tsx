@@ -11,6 +11,8 @@ import {
 import Button from "../components/Button";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
+import { Font } from "../styling/fonts";
+import { Spacer } from "../styling/spacers";
 import {
   getBackgroundColor,
   getOnBackgroundColor,
@@ -66,12 +68,13 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
         editable={false}
       />
       <Text style={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}>
-        🛠 Your custom action
+        🛠 Type your custom action
       </Text>
       <TextInput
         style={styles.input}
         onChangeText={onValueChange}
         value={customAction}
+        placeholder="What's your action?"
         multiline
       />
       <Button
@@ -88,39 +91,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: Platform.OS === "android" ? 30 : 0,
+    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
   },
   title: {
-    fontSize: 24,
+    fontSize: Font.X_LARGE,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 12,
+    marginVertical: Spacer.MEDIUM_16,
   },
   input: {
     width: "80%",
-    height: "20%",
-    backgroundColor: "white",
-    borderRadius: 10,
+    height: "25%",
+    backgroundColor: Colors.white,
+    borderRadius: Spacer.SMALL_8,
     borderWidth: 1,
     borderColor: Colors.grey,
-    padding: 20,
-    margin: 12,
+    padding: Spacer.MEDIUM_16,
+    margin: Spacer.MEDIUM_16,
+    color: Colors.black
   },
   subtitle: {
-    marginTop: 12,
-    fontSize: 16,
+    marginTop: Spacer.MEDIUM_16,
+    fontSize: Font.MEDIUM,
   },
   button: {
-    marginVertical: 20,
-    backgroundColor: Colors.button,
-    padding: 10,
-    width: 130,
+    marginVertical: Spacer.MEDIUM_16,
+    backgroundColor: Colors.yellow,
+    padding: Spacer.MEDIUM_16 / 2,
+    width: Spacer.LARGE_48 * 3,
   },
   buttonText: {
-    color: Colors.buttonText,
-    fontSize: 16,
+    color: Colors.onBackgroundLight,
+    fontSize: Font.MEDIUM,
   },
   disclaimer: {
-    fontSize: 12,
+    fontSize: Font.MEDIUM,
   },
 });

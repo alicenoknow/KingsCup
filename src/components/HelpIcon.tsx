@@ -1,13 +1,16 @@
 import React, { useContext, useState } from "react";
-import { TouchableOpacity, View, StyleSheet, Modal, Text } from "react-native";
+import { TouchableOpacity, View, StyleSheet, Modal, Text, Platform } from "react-native";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
+import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
 import { getOnBackgroundColor } from "../styling/themeHelper";
 import { getCardRule } from "../utils/rules";
 import Button from "./Button";
 
-// TODO: format spacers heights etc and this file styling
+
+const ICON_SIZE = 42;
+const ICON_BORDER = 3;
 
 export default function HelpIcon() {
   const {
@@ -40,7 +43,7 @@ export default function HelpIcon() {
             <Button
               style={styles.button}
               textStyle={styles.buttonText}
-              label={"ok"}
+              label={"Got it!"}
               onPress={() => setInfoVisibility(false)}
             />
           </View>
@@ -66,38 +69,36 @@ export default function HelpIcon() {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 21,
-    fontWeight: "800",
+    fontSize: Font.MEDIUM,
+    fontWeight: "700",
     textAlign: "center",
   },
   icon: {
     backgroundColor: "transparent",
     borderRadius: Spacer.MEDIUM_24,
-    borderWidth: 3,
-    height: 40,
-    width: 40,
+    borderWidth: ICON_BORDER,
+    height: ICON_SIZE,
+    width: ICON_SIZE,
     justifyContent: "center",
-    alignContent: "center",
   },
-
   modal: {
     flex: 1,
-    width: 300,
-    height: 500,
+    width: "70%",
+    height: "50%",
     backgroundColor: Colors.white,
-    margin: 100,
+    margin: Spacer.LARGE_48,
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: Spacer.MEDIUM_24,
   },
   modalView: {
-    margin: 20,
+    margin: Spacer.MEDIUM_24,
     backgroundColor: Colors.white,
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: Spacer.MEDIUM_24,
+    padding: Spacer.MEDIUM_24,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -109,18 +110,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: Spacer.MEDIUM_16,
+    padding: Spacer.SMALL_8,
     elevation: 2,
     backgroundColor: Colors.button,
-    paddingHorizontal: 16,
+    paddingHorizontal: Spacer.MEDIUM_16,
   },
   buttonText: {
     color: Colors.buttonText,
-    fontSize: 16,
+    fontSize: Font.MEDIUM,
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: Spacer.MEDIUM_16,
     textAlign: "center",
   },
 });

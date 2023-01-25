@@ -6,7 +6,7 @@ export enum Colors {
   blue = "#4455ff",
   pink = "#8c52ff",
   grey = "#999999",
-  backgroundLight = "#80dee8",
+  backgroundLight = "#ded0f7",
   backgroundDark = "#35353d",
   onBackgroundLight = "black",
   onBackgroundDark = "white",

@@ -13,6 +13,8 @@ import CardsList from "../components/CardsList";
 import { UseCustomToggleButton } from "../components/UseCustomToggleButton";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
+import { Font } from "../styling/fonts";
+import { Spacer } from "../styling/spacers";
 import {
   getBackgroundColor,
   getOnBackgroundColor,
@@ -46,7 +48,7 @@ export default function Rules({ navigation }: RulesProps) {
       >
         <Text style={[styles.title, textStyle]}>Actions</Text>
         <Text style={[styles.subtitle, textStyle]}>
-          tap on card to see default action or change it to custom one
+          tap on a card to see default action or to set custom action
         </Text>
         <View style={styles.toggle}>
           <UseCustomToggleButton
@@ -69,14 +71,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    paddingTop: Platform.OS === "android" ? 30 : 0,
+    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
   },
   content: {
     width: "100%",
   },
   item: {
     width: "100%",
-    height: 60,
+    height: Spacer.LARGE_48,
     justifyContent: "center",
     alignContent: "center",
   },
@@ -89,26 +91,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    fontSize: 24,
+    fontSize: Font.X_LARGE,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 16,
-    marginBottom: 24,
+    marginVertical: Spacer.MEDIUM_16,
+    marginBottom: Spacer.MEDIUM_24,
   },
   subtitle: {
     textAlign: "center",
-    marginBottom: 24,
-    marginHorizontal: 24,
+    marginBottom: Spacer.MEDIUM_24,
+    marginHorizontal: Spacer.MEDIUM_24,
     flexWrap: "wrap",
-    fontSize: 18,
+    fontSize: Font.MEDIUM,
   },
   statusText: {
     textAlign: "center",
     justifyContent: "center",
     textAlignVertical: "center",
-    paddingHorizontal: 5,
+    alignContent: "center",
+    paddingHorizontal: Spacer.MEDIUM_16,
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: Font.MEDIUM,
   },
   buttonText: {
     color: Colors.buttonText,
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   toggle: {
     flexDirection: "row",
     justifyContent: "center",
-    alignContent: "center",
-    margin: 24,
+    alignItems: "center",
+    margin: Spacer.MEDIUM_24,
   },
 });

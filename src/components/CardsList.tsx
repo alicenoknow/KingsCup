@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { Screens } from "../screens/types";
+import { Spacer } from "../styling/spacers";
 import { CardName } from "../utils/cards";
 import CardListItem from "./CardListItem";
 
@@ -193,6 +194,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   contentList: {
-    paddingTop: 20,
+    paddingTop: Spacer.MEDIUM_24,
   },
 });

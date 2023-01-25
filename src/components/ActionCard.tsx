@@ -17,7 +17,7 @@ import CardContent from "./CardContent";
 
 const { width, height } = Dimensions.get("window");
 
-const HIDE_OFFSET = 30;
+const HIDE_OFFSET = 100;
 const HORIZONTAL_SNAP_POINTS = [-width - HIDE_OFFSET, 0, width + HIDE_OFFSET];
 const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
 const SLIDE_IN_DURATION = 100;
@@ -116,10 +116,8 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
 
   const style = useAnimatedStyle(() => ({
     transform: [
-      { rotateX: "30deg" },
       { translateX: translateX.value },
       { translateY: translateY.value },
-      { rotateY: `${rotateZ.value / 10}deg` },
       { rotateZ: `${rotateZ.value}deg` },
       { scale: scale.value },
     ],

@@ -7,6 +7,7 @@ import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
 import { ActionType, AppContext, GameState } from "../store/store";
 import { Colors } from "../styling/colors";
+import { Spacer } from "../styling/spacers";
 import {
   getBackgroundColor,
   getOnBackgroundColor,
@@ -43,7 +44,7 @@ export default function GameBoard({ navigation }: GameBoardProps) {
           <Button
             style={styles.gameOverButton}
             textStyle={styles.gameOverButtonText}
-            label={"one more cup?"}
+            label={"One more cup?"}
             onPress={() =>
               dispatch({ type: ActionType.SHUFFLE_DECK, payload: undefined })
             }
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? 30 : 0,
+    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
   },
   iconContainer: {
     flex: 1,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   gameOverButton: {
     marginTop: CARD_HEIGHT - 200,
-    paddingHorizontal: 16,
+    paddingHorizontal: Spacer.MEDIUM_16,
     backgroundColor: Colors.button,
   },
   gameOverButtonText: {

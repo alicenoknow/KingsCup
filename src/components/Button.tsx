@@ -9,6 +9,7 @@ import {
   TextStyle,
 } from "react-native";
 import { Colors } from "../styling/colors";
+import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
 
 interface ButtonProps {
@@ -40,6 +41,6 @@ const styles = StyleSheet.create({
     padding: Spacer.SMALL_8,
   },
   text: {
-    fontSize: 24,
+    fontSize: Font.X_LARGE,
   },
 });

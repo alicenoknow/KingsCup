@@ -15,6 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Colors } from "../styling/colors";
 import { CardName } from "../utils/cards";
+import { Font } from "../styling/fonts";
 
 function getIcon(index: number): string {
   switch (index % 4) {
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     textAlignVertical: "center",
-    fontSize: 20,
+    fontSize: Font.LARGE,
     fontWeight: "bold",
   },
 });

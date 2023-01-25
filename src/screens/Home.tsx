@@ -2,7 +2,7 @@ import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { useContext } from "react";
-import { View, StyleSheet, SafeAreaView, Text, Platform } from "react-native";
+import { View, StyleSheet, SafeAreaView, Text, Platform, Image, Dimensions } from "react-native";
 import Button from "../components/Button";
 import { ThemeToggleButton } from "../components/ThemeToggleButton";
 import { AppContext } from "../store/store";
@@ -13,6 +13,12 @@ import {
   getOnBackgroundColor,
 } from "../styling/themeHelper";
 import { Screens } from "./types";
+import Logo from '../../assets/logo.png';
+import { Font } from "../styling/fonts";
+
+const LOGO = Image.resolveAssetSource(Logo).uri;
+const LOGO_SIZE = Dimensions.get('window').width * 0.7
+
 
 interface HomeProps {
   navigation: NativeStackNavigationProp<ParamListBase, Screens.HOME>;
@@ -26,6 +32,10 @@ export default function Home(props: HomeProps) {
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
+      <Image
+        source={{uri: LOGO}}
+        style={styles.logo}
+      />
       <View style={styles.buttonsContainer}>
         <Button
           label={"Start"}
@@ -60,30 +70,36 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? 30 : 0,
+    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
   },
   buttonsContainer: {
     flex: 1,
     margin: Spacer.MEDIUM_24,
-    marginTop: "30%",
+    marginTop: "5%",
     width: "60%",
   },
   button: {
-    marginVertical: 20,
+    marginVertical: Spacer.MEDIUM_24,
     backgroundColor: Colors.yellow,
   },
   themeToggle: {
-    paddingVertical: 16,
+    paddingVertical: Spacer.MEDIUM_16,
     flexDirection: "row",
     justifyContent: "center",
   },
   text: {
     textAlign: "center",
     justifyContent: "center",
-    paddingHorizontal: 8,
-    fontSize: 22,
+    paddingHorizontal: Spacer.SMALL_8,
+    fontSize: Font.LARGE,
   },
   disclaimer: {
-    paddingBottom: 32,
+    fontSize: Font.SMALL,
+    paddingBottom: Spacer.LARGE_48,
   },
+  logo: {
+    marginTop: "10%",
+    width: LOGO_SIZE,
+    height: LOGO_SIZE,
+  }
 });
