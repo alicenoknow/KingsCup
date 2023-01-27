@@ -12,7 +12,6 @@ import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
-import { getButtonColor, getOnButtonColor } from "../styling/themeHelper";
 import DecoratedText from "./DecoratedText";
 
 interface ButtonProps {
@@ -25,12 +24,11 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
   const { label, disabled, style, textStyle, onPress } = props;
-  const { state: { isLightTheme } } = useContext(AppContext);
 
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress}>
-      <View style={[styles.button, getButtonColor(isLightTheme), style]}>
-        <DecoratedText textStyle={[styles.text, getOnButtonColor(isLightTheme), textStyle]} text={label} />
+      <View style={[styles.button, style]}>
+        <DecoratedText textStyle={[styles.text, textStyle]} text={label} />
       </View>
     </TouchableOpacity>
   );
@@ -42,8 +40,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: Spacer.MEDIUM_24,
     padding: Spacer.SMALL_8,
+    backgroundColor: Colors.button
   },
   text: {
     fontSize: Font.LARGE,
+    color: Colors.buttonText,
   },
 });

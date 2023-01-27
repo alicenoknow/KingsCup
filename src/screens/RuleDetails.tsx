@@ -1,13 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { useState } from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  TextInput,
-  Platform,
-} from "react-native";
+import { StyleSheet, SafeAreaView, TextInput, Platform } from "react-native";
 import Button from "../components/Button";
 import DecoratedText from "../components/DecoratedText";
 import { AppContext } from "../store/store";
@@ -56,11 +50,11 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
-      <DecoratedText 
+      <DecoratedText
         textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]}
         text={`Action for card ${label}`}
       />
-      <DecoratedText 
+      <DecoratedText
         textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
         text="Default action"
       />
@@ -70,7 +64,7 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
         multiline
         editable={false}
       />
-      <DecoratedText 
+      <DecoratedText
         textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
         text="🛠 Type your custom action"
       />

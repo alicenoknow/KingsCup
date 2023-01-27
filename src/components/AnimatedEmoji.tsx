@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -31,7 +31,7 @@ export default function AnimatedEmoji(props: EmojiProps) {
         }
       ),
     };
-  }); 
+  });
 
   return (
     <Animated.View

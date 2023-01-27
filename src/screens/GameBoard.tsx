@@ -7,9 +7,7 @@ import ActionCard from "../components/ActionCard";
 import Button from "../components/Button";
 import { ActionType, AppContext, GameState } from "../store/store";
 import { Spacer } from "../styling/spacers";
-import {
-  getBackgroundColor,
-} from "../styling/themeHelper";
+import { getBackgroundColor } from "../styling/themeHelper";
 import { CARD_HEIGHT } from "../utils/assets";
 import { Card } from "../utils/cards";
 import { Screens } from "./types";
@@ -66,5 +64,5 @@ const styles = StyleSheet.create({
   gameOverButton: {
     marginTop: CARD_HEIGHT - 200,
     paddingHorizontal: Spacer.MEDIUM_16,
-  }
+  },
 });

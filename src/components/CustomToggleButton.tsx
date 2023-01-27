@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Switch } from "react-native";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
-import { getButtonColor } from "../styling/themeHelper";
 
 interface UseCustomToggleProps {
   value: boolean;
@@ -13,8 +12,7 @@ export function CustomToggleButton({
   value,
   onChange,
 }: UseCustomToggleProps) {
-  const { state: { isLightTheme } } = useContext(AppContext);
-  const toggleColor = getButtonColor(isLightTheme).backgroundColor;
+  const toggleColor = Colors.button;
   return (
     <Switch
       trackColor={{ false: toggleColor, true: toggleColor }}

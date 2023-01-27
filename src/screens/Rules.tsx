@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  Text,
   LayoutChangeEvent,
   Platform,
 } from "react-native";
@@ -47,24 +46,20 @@ export default function Rules({ navigation }: RulesProps) {
           setHeaderHeight(event.nativeEvent.layout.height);
         }}
       >
-        <DecoratedText 
-          textStyle={[styles.title, textStyle]} 
-          text="Actions" 
-        />
-        <DecoratedText 
+        <DecoratedText textStyle={[styles.title, textStyle]} text="Actions" />
+        <DecoratedText
           textStyle={[styles.subtitle, textStyle]}
           text="tap on a card to see default action or to set custom action"
         />
         <View style={styles.toggle}>
-          <CustomToggleButton
-            value={useCustomRules}
-            onChange={handleChange}
-          />
-          <DecoratedText 
+          <CustomToggleButton value={useCustomRules} onChange={handleChange} />
+          <DecoratedText
             textStyle={[styles.statusText, textStyle]}
-            text={useCustomRules
-              ? "custom actions enabled"
-              : "custom actions disabled"}
+            text={
+              useCustomRules
+                ? "custom actions enabled"
+                : "custom actions disabled"
+            }
           />
         </View>
       </View>

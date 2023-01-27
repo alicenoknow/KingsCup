@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import HelpIcon from "./components/HelpIcon";
 import GameBoard from "./screens/GameBoard";
 import Home from "./screens/Home";
@@ -14,7 +13,9 @@ import { getOnBackgroundColor } from "./styling/themeHelper";
 const Stack = createNativeStackNavigator();
 
 export default function ScreensContainer() {
-  const { state: { isLightTheme } } = useContext(AppContext);
+  const {
+    state: { isLightTheme },
+  } = useContext(AppContext);
 
   const commonScreenOptions = {
     headerTransparent: true,

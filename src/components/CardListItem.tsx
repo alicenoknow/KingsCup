@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
   TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   Dimensions,
@@ -18,7 +17,6 @@ import { CardName } from "../utils/cards";
 import { Font } from "../styling/fonts";
 import DecoratedText from "./DecoratedText";
 import { Spacer } from "../styling/spacers";
-import { AppContext } from "../store/store";
 
 function getIcon(index: number): string {
   switch (index % 4) {
@@ -50,9 +48,6 @@ const totalItemHeight = itemHeight + 2 * distanceBetweenItem;
 
 export default function CardListItem(props: CardListItemProps) {
   const navHeaderHeight = useHeaderHeight();
-  const {
-    state: { isLightTheme },
-  } = useContext(AppContext);
   const { index, card, y, headerHeight, onPress } = props;
 
   const listContentHeight = height - headerHeight - navHeaderHeight;

@@ -2,7 +2,14 @@ import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { useContext } from "react";
-import { View, StyleSheet, SafeAreaView, Text, Platform, Image, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  Image,
+  Dimensions,
+} from "react-native";
 import Button from "../components/Button";
 import { ThemeToggleButton } from "../components/ThemeToggleButton";
 import { AppContext } from "../store/store";
@@ -13,14 +20,13 @@ import {
   getOnBackgroundColor,
 } from "../styling/themeHelper";
 import { Screens } from "./types";
-import Logo from '../../assets/main.png';
+import Logo from "../../assets/main.png";
 import { Font } from "../styling/fonts";
 import DecoratedText from "../components/DecoratedText";
 import AnimatedEmoji from "../components/AnimatedEmoji";
 
 const LOGO = Image.resolveAssetSource(Logo).uri;
-const LOGO_SIZE = Dimensions.get('window').width * 0.5
-
+const LOGO_SIZE = Dimensions.get("window").width * 0.5;
 
 interface HomeProps {
   navigation: NativeStackNavigationProp<ParamListBase, Screens.HOME>;
@@ -34,14 +40,14 @@ export default function Home(props: HomeProps) {
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
-      <Image
-        source={{uri: LOGO}}
-        style={styles.logo}
-      />
-      <View style={{ ...getBackgroundColor(isLightTheme, true)}}>
-        <DecoratedText textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]} text="King's Cup" />
+      <Image source={{ uri: LOGO }} style={styles.logo} />
+      <View style={{ ...getBackgroundColor(isLightTheme, true) }}>
+        <DecoratedText
+          textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]}
+          text="King's Cup"
+        />
       </View>
-      <View style={{ flex: 1, width: "100%"}} />
+      <View style={{ flex: 1, width: "100%" }} />
       <View style={styles.buttonsContainer}>
         <Button
           label={"Play"}
@@ -63,12 +69,16 @@ export default function Home(props: HomeProps) {
         <ThemeToggleButton />
         <DecoratedText textStyle={styles.text} text="🌞" />
       </View>
-      <DecoratedText 
+      <DecoratedText
         textStyle={[styles.disclaimer, getOnBackgroundColor(isLightTheme)]}
         text="created by alicenoknow"
       />
-      {Array.from(Array(8).keys()).map(key => <AnimatedEmoji key={key} emoji="🍺" />)}
-      {Array.from(Array(8).keys()).map(key => <AnimatedEmoji key={key} emoji="👑" />)}
+      {Array.from(Array(8).keys()).map((key) => (
+        <AnimatedEmoji key={key} emoji="🍺" />
+      ))}
+      {Array.from(Array(8).keys()).map((key) => (
+        <AnimatedEmoji key={key} emoji="👑" />
+      ))}
     </SafeAreaView>
   );
 }
@@ -110,5 +120,5 @@ const styles = StyleSheet.create({
     fontSize: Font.TITLE,
     fontWeight: "bold",
     alignSelf: "center",
-  }
+  },
 });

@@ -116,9 +116,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [useCustomRules, setUseCustom] = useState<boolean>(false);
-  const [customRules, setCustomRules] = useState<
-    { [key in CardName]?: string }
-  >({});
+  const [customRules, setCustomRules] = useState<{
+    [key in CardName]?: string;
+  }>({});
 
   useEffect(() => {
     const fetchDataFromStorage = async () => {

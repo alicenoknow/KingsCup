@@ -1,14 +1,19 @@
 import React, { useContext, useState } from "react";
-import { TouchableOpacity, View, StyleSheet, Modal, Text, Platform } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Modal,
+  Platform,
+} from "react-native";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
-import { getButtonColor, getOnBackgroundColor, getOnButtonColor } from "../styling/themeHelper";
+import { getOnBackgroundColor } from "../styling/themeHelper";
 import { getCardRule } from "../utils/rules";
 import Button from "./Button";
 import DecoratedText from "./DecoratedText";
-
 
 const ICON_SIZE = 42;
 const ICON_BORDER = 3;
@@ -40,10 +45,13 @@ export default function HelpIcon() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <DecoratedText textStyle={styles.modalText} text={ruleDescription ?? ''} />
+            <DecoratedText
+              textStyle={styles.modalText}
+              text={ruleDescription ?? ""}
+            />
             <Button
-              style={[ getButtonColor(isLightTheme), styles.button]}
-              textStyle={[getOnButtonColor(isLightTheme), styles.buttonText]}
+              style={styles.button}
+              textStyle={styles.buttonText}
               label={"Got it!"}
               onPress={() => setInfoVisibility(false)}
             />
@@ -61,7 +69,10 @@ export default function HelpIcon() {
           { borderColor: getOnBackgroundColor(isLightTheme).color },
         ]}
       >
-        <DecoratedText textStyle={[styles.text, getOnBackgroundColor(isLightTheme)]} text="?" />
+        <DecoratedText
+          textStyle={[styles.text, getOnBackgroundColor(isLightTheme)]}
+          text="?"
+        />
       </View>
       {cardInfoModal()}
     </TouchableOpacity>
@@ -115,9 +126,11 @@ const styles = StyleSheet.create({
     padding: Spacer.SMALL_8,
     elevation: 2,
     paddingHorizontal: Spacer.MEDIUM_16,
+    backgroundColor: Colors.button,
   },
   buttonText: {
     fontSize: Font.MEDIUM,
+    color: Colors.buttonText,
   },
   modalText: {
     marginBottom: Spacer.MEDIUM_16,

@@ -27,7 +27,9 @@ interface CardContentProps {
 }
 
 export default function CardContent({ index, front, style }: CardContentProps) {
-  const { state: { currentIndex, gameState } } = useContext(AppContext);
+  const {
+    state: { currentIndex, gameState },
+  } = useContext(AppContext);
 
   const rotateYAsDeg = useSharedValue(180);
   const backOpacity = useSharedValue(1);
@@ -51,9 +53,7 @@ export default function CardContent({ index, front, style }: CardContentProps) {
 
   const backCardStyle = useAnimatedStyle(() => ({
     opacity: backOpacity.value,
-    transform: [
-      { perspective: perspective ?? 100 },
-    ],
+    transform: [{ perspective: perspective ?? 100 }],
   }));
 
   const frontCardStyle = useAnimatedStyle(() => ({
