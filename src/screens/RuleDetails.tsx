@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     margin: Spacer.MEDIUM_16,
     color: Colors.black,
     fontSize: Font.MEDIUM,
-    fontFamily: Platform.OS === "android" ? "monospace" : undefined,
+    fontFamily: Platform.OS === "android" ? "monospace" : "Menlo-Regular",
   },
   subtitle: {
     marginTop: Spacer.MEDIUM_16,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: Spacer.MEDIUM_16,
     padding: Spacer.SMALL_8,
-    width: Spacer.LARGE_48 * 3,
+    paddingHorizontal: Spacer.MEDIUM_16,
   },
   disclaimer: {
     fontSize: Font.MEDIUM,

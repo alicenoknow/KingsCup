@@ -13,5 +13,6 @@ export enum Colors {
   buttonText = "#f2f2f2",
 
   secondary = "#ffbd59",
+  secondaryTransparent = "#ffbd59cc",
   secondaryText = "#232423",
 }

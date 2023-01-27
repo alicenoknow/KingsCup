@@ -13,6 +13,6 @@ export default function DecoratedText(props: TextProps) {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: Platform.OS === "android" ? "monospace" : undefined,
+    fontFamily: Platform.OS === "android" ? "monospace" : "Menlo-Regular",
   },
 });

@@ -1,13 +1,10 @@
 import { Colors } from "./colors";
 
-export function getBackgroundColor(
-  isLightTheme: boolean,
-  hasOpacity?: boolean
-) {
+export function getBackgroundColor(isLightTheme: boolean) {
   return {
     backgroundColor: isLightTheme
-      ? `${Colors.backgroundLight}${hasOpacity ? "dd" : ""}`
-      : `${Colors.backgroundDark}${hasOpacity ? "dd" : ""}`,
+      ? Colors.backgroundLight
+      : Colors.backgroundDark,
   };
 }
 

@@ -41,13 +41,10 @@ export default function Home(props: HomeProps) {
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
       <Image source={{ uri: LOGO }} style={styles.logo} />
-      <View style={{ ...getBackgroundColor(isLightTheme, true) }}>
-        <DecoratedText
-          textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]}
-          text="King's Cup"
-        />
+      <View style={styles.titleContainer}>
+        <DecoratedText textStyle={styles.title} text="King's Cup" />
       </View>
-      <View style={{ flex: 1, width: "100%" }} />
+      <View style={styles.flexOne} />
       <View style={styles.buttonsContainer}>
         <Button
           label={"Play"}
@@ -112,13 +109,24 @@ const styles = StyleSheet.create({
     marginBottom: Spacer.LARGE_48,
   },
   logo: {
-    marginTop: "10%",
+    marginTop: "5%",
     width: LOGO_SIZE,
     height: LOGO_SIZE,
+    opacity: 0.9,
   },
   title: {
     fontSize: Font.TITLE,
     fontWeight: "bold",
     alignSelf: "center",
+    color: Colors.secondaryText,
+  },
+  titleContainer: {
+    width: "100%",
+    backgroundColor: Colors.secondaryTransparent,
+    padding: Spacer.MEDIUM_16,
+  },
+  flexOne: {
+    flex: 1,
+    width: "100%",
   },
 });
