@@ -15,12 +15,6 @@ export enum Colors {
   buttonTextOnLight = "#f2f2f2",
   buttonTextOnDark = "#232423",
 
-  secondaryOnLight = "#ffbd59",
-  secondaryOnDark = "#ffbd59",
-
-  secondaryTextOnLight = "#232423",
-  secondaryTextOnDark = "#232423",
-
-  yellow = "#ffde59",
-  purple = "#3b07a2"
+  secondary = "#ffbd59",
+  secondaryText = "#232423",
 }

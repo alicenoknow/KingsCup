@@ -17,7 +17,7 @@ import CardContent from "./CardContent";
 
 const { width, height } = Dimensions.get("window");
 
-const HIDE_OFFSET = 100;
+const HIDE_OFFSET = 10;
 const HORIZONTAL_SNAP_POINTS = [-width - HIDE_OFFSET, 0, width + HIDE_OFFSET];
 const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
 const SLIDE_IN_DURATION = 100;
@@ -80,7 +80,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
       offset.value.x = translateX.value;
       offset.value.y = translateY.value;
       rotateZ.value = withTiming(0);
-      scale.value = withTiming(1.3);
+      scale.value = withTiming(1.2);
     })
     .onUpdate(({ translationX, translationY }) => {
       if (index !== currentIndex || gameState === GameState.KING) {
