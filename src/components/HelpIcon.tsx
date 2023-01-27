@@ -4,9 +4,10 @@ import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
-import { getOnBackgroundColor } from "../styling/themeHelper";
+import { getButtonColor, getOnBackgroundColor, getOnButtonColor } from "../styling/themeHelper";
 import { getCardRule } from "../utils/rules";
 import Button from "./Button";
+import DecoratedText from "./DecoratedText";
 
 
 const ICON_SIZE = 42;
@@ -39,10 +40,10 @@ export default function HelpIcon() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{ruleDescription}</Text>
+          <DecoratedText textStyle={styles.modalText} text={ruleDescription ?? ''} />
             <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
+              style={[ getButtonColor(isLightTheme), styles.button]}
+              textStyle={[getOnButtonColor(isLightTheme), styles.buttonText]}
               label={"Got it!"}
               onPress={() => setInfoVisibility(false)}
             />
@@ -60,7 +61,7 @@ export default function HelpIcon() {
           { borderColor: getOnBackgroundColor(isLightTheme).color },
         ]}
       >
-        <Text style={[styles.text, getOnBackgroundColor(isLightTheme)]}>?</Text>
+        <DecoratedText textStyle={[styles.text, getOnBackgroundColor(isLightTheme)]} text="?" />
       </View>
       {cardInfoModal()}
     </TouchableOpacity>
@@ -69,7 +70,7 @@ export default function HelpIcon() {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: Font.MEDIUM,
+    fontSize: Platform.OS === "android" ? Font.LARGE : Font.MEDIUM,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -113,15 +114,14 @@ const styles = StyleSheet.create({
     borderRadius: Spacer.MEDIUM_16,
     padding: Spacer.SMALL_8,
     elevation: 2,
-    backgroundColor: Colors.button,
     paddingHorizontal: Spacer.MEDIUM_16,
   },
   buttonText: {
-    color: Colors.buttonText,
     fontSize: Font.MEDIUM,
   },
   modalText: {
     marginBottom: Spacer.MEDIUM_16,
     textAlign: "center",
+    fontSize: Font.MEDIUM,
   },
 });

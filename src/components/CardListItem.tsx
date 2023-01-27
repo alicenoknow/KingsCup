@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
   TouchableOpacity,
@@ -16,6 +16,10 @@ import Animated, {
 import { Colors } from "../styling/colors";
 import { CardName } from "../utils/cards";
 import { Font } from "../styling/fonts";
+import DecoratedText from "./DecoratedText";
+import { Spacer } from "../styling/spacers";
+import { AppContext } from "../store/store";
+import { getOnSecondaryColor, getSecondaryColor } from "../styling/themeHelper";
 
 function getIcon(index: number): string {
   switch (index % 4) {
@@ -47,6 +51,7 @@ const totalItemHeight = itemHeight + 2 * distanceBetweenItem;
 
 export default function CardListItem(props: CardListItemProps) {
   const navHeaderHeight = useHeaderHeight();
+  const { state: { isLightTheme } } = useContext(AppContext);
   const { index, card, y, headerHeight, onPress } = props;
 
   const listContentHeight = height - headerHeight - navHeaderHeight;
@@ -85,9 +90,13 @@ export default function CardListItem(props: CardListItemProps) {
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <Animated.View style={[styles.item, animatedStyle]} key={index}>
+      <Animated.View style={[styles.item, animatedStyle, getSecondaryColor(isLightTheme)]} key={index}>
         <View>
-          <Text style={styles.text}>{`${getIcon(index)}  ${card.label}`}</Text>
+        <DecoratedText 
+          textStyle={[styles.text,
+          getOnSecondaryColor(isLightTheme)]}
+          text={`${getIcon(index)}  ${card.label}`}
+        />
         </View>
       </Animated.View>
     </TouchableOpacity>
@@ -98,20 +107,11 @@ const styles = StyleSheet.create({
   item: {
     marginVertical: distanceBetweenItem,
     alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     height: itemHeight,
     width: "90%",
     alignContent: "center",
     justifyContent: "center",
-    borderRadius: 10,
-    backgroundColor: Colors.yellow,
+    borderRadius: Spacer.MEDIUM_24,
   },
   text: {
     textAlign: "center",

@@ -14,9 +14,7 @@ import { getOnBackgroundColor } from "./styling/themeHelper";
 const Stack = createNativeStackNavigator();
 
 export default function ScreensContainer() {
-  const {
-    state: { isLightTheme },
-  } = useContext(AppContext);
+  const { state: { isLightTheme } } = useContext(AppContext);
 
   const commonScreenOptions = {
     headerTransparent: true,

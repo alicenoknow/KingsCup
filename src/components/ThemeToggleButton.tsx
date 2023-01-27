@@ -2,12 +2,10 @@ import React, { useContext, useState } from "react";
 import { Switch } from "react-native";
 import { ActionType, AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
+import { CustomToggleButton } from "./CustomToggleButton";
 
 export function ThemeToggleButton() {
-  const {
-    state: { isLightTheme },
-    dispatch,
-  } = useContext(AppContext);
+  const { state: { isLightTheme }, dispatch } = useContext(AppContext);
   const [checked, setChecked] = useState<boolean>(isLightTheme);
 
   const handleChange = (value: boolean) => {
@@ -16,12 +14,9 @@ export function ThemeToggleButton() {
   };
 
   return (
-    <Switch
-      trackColor={{ false: Colors.yellow, true: Colors.yellow }}
-      thumbColor={Colors.white}
-      ios_backgroundColor={Colors.grey}
-      onValueChange={handleChange}
+    <CustomToggleButton
       value={checked}
+      onChange={handleChange}
     />
   );
 }

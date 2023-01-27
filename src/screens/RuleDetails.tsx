@@ -9,6 +9,7 @@ import {
   Platform,
 } from "react-native";
 import Button from "../components/Button";
+import DecoratedText from "../components/DecoratedText";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
@@ -55,21 +56,24 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
-      <Text style={[styles.title, getOnBackgroundColor(isLightTheme)]}>
-        Action for card {label}
-      </Text>
-      <Text style={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}>
-        Default action
-      </Text>
+      <DecoratedText 
+        textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]}
+        text={`Action for card ${label}`}
+      />
+      <DecoratedText 
+        textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
+        text="Default action"
+      />
       <TextInput
         style={styles.input}
         value={getCardRule(cards[0])}
         multiline
         editable={false}
       />
-      <Text style={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}>
-        🛠 Type your custom action
-      </Text>
+      <DecoratedText 
+        textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
+        text="🛠 Type your custom action"
+      />
       <TextInput
         style={styles.input}
         onChangeText={onValueChange}
@@ -80,7 +84,6 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
       <Button
         label={isActionConfirmed ? "Saved" : "Confirm"}
         style={[styles.button, { opacity: isActionConfirmed ? 0.7 : 1 }]}
-        textStyle={styles.buttonText}
         onPress={confirmNewRule}
       />
     </SafeAreaView>
@@ -108,7 +111,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.grey,
     padding: Spacer.MEDIUM_16,
     margin: Spacer.MEDIUM_16,
-    color: Colors.black
+    color: Colors.black,
+    fontSize: Font.MEDIUM,
+    fontFamily: Platform.OS === "android" ? "monospace" : undefined,
   },
   subtitle: {
     marginTop: Spacer.MEDIUM_16,
@@ -116,13 +121,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: Spacer.MEDIUM_16,
-    backgroundColor: Colors.yellow,
-    padding: Spacer.MEDIUM_16 / 2,
+    padding: Spacer.SMALL_8,
     width: Spacer.LARGE_48 * 3,
-  },
-  buttonText: {
-    color: Colors.onBackgroundLight,
-    fontSize: Font.MEDIUM,
   },
   disclaimer: {
     fontSize: Font.MEDIUM,

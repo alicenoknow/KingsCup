@@ -27,9 +27,7 @@ interface CardContentProps {
 }
 
 export default function CardContent({ index, front, style }: CardContentProps) {
-  const {
-    state: { currentIndex, gameState },
-  } = useContext(AppContext);
+  const { state: { currentIndex, gameState } } = useContext(AppContext);
 
   const rotateYAsDeg = useSharedValue(180);
   const backOpacity = useSharedValue(1);

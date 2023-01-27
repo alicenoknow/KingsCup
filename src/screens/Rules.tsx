@@ -10,7 +10,8 @@ import {
   Platform,
 } from "react-native";
 import CardsList from "../components/CardsList";
-import { UseCustomToggleButton } from "../components/UseCustomToggleButton";
+import DecoratedText from "../components/DecoratedText";
+import { CustomToggleButton } from "../components/CustomToggleButton";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
@@ -46,20 +47,25 @@ export default function Rules({ navigation }: RulesProps) {
           setHeaderHeight(event.nativeEvent.layout.height);
         }}
       >
-        <Text style={[styles.title, textStyle]}>Actions</Text>
-        <Text style={[styles.subtitle, textStyle]}>
-          tap on a card to see default action or to set custom action
-        </Text>
+        <DecoratedText 
+          textStyle={[styles.title, textStyle]} 
+          text="Actions" 
+        />
+        <DecoratedText 
+          textStyle={[styles.subtitle, textStyle]}
+          text="tap on a card to see default action or to set custom action"
+        />
         <View style={styles.toggle}>
-          <UseCustomToggleButton
+          <CustomToggleButton
             value={useCustomRules}
             onChange={handleChange}
           />
-          <Text style={[styles.statusText, textStyle]}>
-            {useCustomRules
+          <DecoratedText 
+            textStyle={[styles.statusText, textStyle]}
+            text={useCustomRules
               ? "custom actions enabled"
               : "custom actions disabled"}
-          </Text>
+          />
         </View>
       </View>
       <CardsList headerHeight={headerHeight} navigation={navigation} />
@@ -112,9 +118,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacer.MEDIUM_16,
     fontWeight: "bold",
     fontSize: Font.MEDIUM,
-  },
-  buttonText: {
-    color: Colors.buttonText,
   },
   toggle: {
     flexDirection: "row",

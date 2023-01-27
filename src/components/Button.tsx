@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   TouchableOpacity,
   Text,
@@ -8,9 +8,12 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
+import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
+import { getButtonColor, getOnButtonColor } from "../styling/themeHelper";
+import DecoratedText from "./DecoratedText";
 
 interface ButtonProps {
   label: string;
@@ -22,11 +25,12 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
   const { label, disabled, style, textStyle, onPress } = props;
+  const { state: { isLightTheme } } = useContext(AppContext);
 
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress}>
-      <View style={[styles.button, style]}>
-        <Text style={[styles.text, textStyle]}>{label}</Text>
+      <View style={[styles.button, getButtonColor(isLightTheme), style]}>
+        <DecoratedText textStyle={[styles.text, getOnButtonColor(isLightTheme), textStyle]} text={label} />
       </View>
     </TouchableOpacity>
   );
@@ -34,13 +38,12 @@ export default function Button(props: ButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    color: Colors.black,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: Spacer.MEDIUM_24,
     padding: Spacer.SMALL_8,
   },
   text: {
-    fontSize: Font.X_LARGE,
+    fontSize: Font.LARGE,
   },
 });
