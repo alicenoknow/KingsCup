@@ -17,13 +17,7 @@ const { width, height } = Dimensions.get("window");
 export default function AnimatedEmoji(props: EmojiProps) {
   const { emoji } = props;
 
-  const xVal = useSharedValue(Math.random() * width);
-  const yVal = useSharedValue(Math.random() * height/2);
-
-  useEffect(() => {
-    xVal.value = Math.random() * width;
-    yVal.value = Math.random() * height/2;
-  }, []);
+  const yVal = useSharedValue(Math.random() * height * 0.6);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -33,19 +27,11 @@ export default function AnimatedEmoji(props: EmojiProps) {
           duration: 2000 + Math.random() * 3000,
         },
         () => {
-          yVal.value = Math.random() * height/2;
-          xVal.value = Math.random() * width;
+          yVal.value = Math.random() * height * 0.6;
         }
       ),
-      left: withTiming(xVal.value, {
-        duration: 2000 + Math.random() * 3000,
-      },
-      () => {
-        yVal.value = Math.random() * height/2;
-        xVal.value = Math.random() * width;
-      }),
     };
-  });
+  }); 
 
   return (
     <Animated.View
@@ -53,12 +39,7 @@ export default function AnimatedEmoji(props: EmojiProps) {
         styles.container,
         {
           left: Math.random() * width,
-          top: Math.random() * height,
-        //   transform: [
-        //     {
-        //       rotateZ: `${Math.random() * 360}deg`,
-        //     },
-        //   ],
+          top: Math.random() * height * 0.6,
         },
         animatedStyle,
       ]}
@@ -76,5 +57,6 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     zIndex: -1,
+    opacity: 0.5,
   },
 });

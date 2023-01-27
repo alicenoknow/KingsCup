@@ -67,18 +67,8 @@ export default function Home(props: HomeProps) {
         textStyle={[styles.disclaimer, getOnBackgroundColor(isLightTheme)]}
         text="created by alicenoknow"
       />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="🍺" />
-      <AnimatedEmoji emoji="👑" />
-      <AnimatedEmoji emoji="👑" />
-      <AnimatedEmoji emoji="👑" />
-      <AnimatedEmoji emoji="👑" />
-      <AnimatedEmoji emoji="👑" />
-      <AnimatedEmoji emoji="👑" />
+      {Array.from(Array(8).keys()).map(key => <AnimatedEmoji key={key} emoji="🍺" />)}
+      {Array.from(Array(8).keys()).map(key => <AnimatedEmoji key={key} emoji="👑" />)}
     </SafeAreaView>
   );
 }
