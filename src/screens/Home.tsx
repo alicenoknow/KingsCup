@@ -41,9 +41,7 @@ export default function Home(props: HomeProps) {
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
       <Image source={{ uri: LOGO }} style={styles.logo} />
-      <View style={styles.titleContainer}>
-        <DecoratedText textStyle={styles.title} text="King's Cup" />
-      </View>
+      <DecoratedText textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]} text="King's Cup" />
       <View style={styles.flexOne} />
       <View style={styles.buttonsContainer}>
         <Button
@@ -118,12 +116,6 @@ const styles = StyleSheet.create({
     fontSize: Font.TITLE,
     fontWeight: "bold",
     alignSelf: "center",
-    color: Colors.secondaryText,
-  },
-  titleContainer: {
-    width: "100%",
-    backgroundColor: Colors.secondaryTransparent,
-    padding: Spacer.MEDIUM_16,
   },
   flexOne: {
     flex: 1,
