@@ -104,14 +104,15 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
         VERTICAL_SNAP_POINTS
       );
 
+      translateX.value = withSpring(destX, { velocity: velocityX });
+      translateY.value = withSpring(destY, { velocity: velocityY });
+
       if (destX || destY) {
         dispatch({
           type: ActionType.NEXT_CARD,
           payload: undefined,
         });
       }
-      translateX.value = withSpring(destX, { velocity: velocityX });
-      translateY.value = withSpring(destY, { velocity: velocityY });
     });
 
   const style = useAnimatedStyle(() => ({
