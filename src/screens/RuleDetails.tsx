@@ -62,6 +62,7 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
         style={styles.input}
         value={getCardRule(cards[0])}
         multiline
+        scrollEnabled
         editable={false}
       />
       <DecoratedText
@@ -73,6 +74,7 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
         onChangeText={onValueChange}
         value={customAction}
         placeholder="What's your action?"
+        scrollEnabled
         multiline
       />
       <Button
