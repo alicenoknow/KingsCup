@@ -20,7 +20,7 @@ const { width, height } = Dimensions.get("window");
 const HIDE_OFFSET = 10;
 const HORIZONTAL_SNAP_POINTS = [-width - HIDE_OFFSET, 0, width + HIDE_OFFSET];
 const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
-const SLIDE_IN_DURATION = 100;
+const SLIDE_IN_DURATION = 250;
 const MAX_ANGLE = 10;
 
 interface CardProps {
@@ -38,7 +38,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
   const translateY = useSharedValue(-height - HIDE_OFFSET);
   const scale = useSharedValue(1);
   const rotateZ = useSharedValue(0);
-  const delay = index * SLIDE_IN_DURATION;
+  const delay = index > 42 ? (index - 42) * SLIDE_IN_DURATION : 1;
   const theta = -MAX_ANGLE + Math.random() * 2 * MAX_ANGLE;
 
   useEffect(() => {
@@ -58,8 +58,8 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
           easing: Easing.ease,
         })
       );
+      rotateZ.value = withDelay(delay, withSpring(theta));
     }
-    rotateZ.value = withDelay(delay, withSpring(theta));
   }, [index, gameState, translateY, rotateZ, delay, theta]);
 
   useEffect(() => {
