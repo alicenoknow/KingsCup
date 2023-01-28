@@ -83,15 +83,6 @@ const cardsItems: CardListItemProps[] = [
     ],
   },
   {
-    label: "8",
-    cards: [
-      CardName.CLUB8,
-      CardName.HEART8,
-      CardName.SPADE8,
-      CardName.DIAMOND8,
-    ],
-  },
-  {
     label: "9",
     cards: [
       CardName.CLUB9,
