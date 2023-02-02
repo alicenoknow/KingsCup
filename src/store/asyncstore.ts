@@ -3,6 +3,7 @@ import { CardName } from "../utils/cards";
 
 const USE_CUSTOM_KEY = "USE_CUSTOM_KEY";
 const RULES_SET_KEY = "RULES_SET_KEY";
+const LIGHT_THEME_KEY = "LIGHT_THEME_KEY";
 
 export const storeUseCustomInfo = async (value: boolean) => {
   try {
@@ -24,6 +25,16 @@ export const storeCustomRulesSetData = async (
   }
 };
 
+export const storeLightThemeInfo = async (value: boolean) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(LIGHT_THEME_KEY, jsonValue);
+  } catch (e) {
+    console.warn("ERROR :: Cannot save light theme to async storage");
+  }
+};
+
+
 export const getUseCustomInfo = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem(USE_CUSTOM_KEY);
@@ -39,5 +50,14 @@ export const getCustomRulesSetData = async () => {
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     console.warn("ERROR :: Cannot read rules set from async storage");
+  }
+};
+
+export const getLightThemeData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(LIGHT_THEME_KEY);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    console.warn("ERROR :: Cannot read light theme info from async storage");
   }
 };

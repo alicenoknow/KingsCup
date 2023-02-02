@@ -9,8 +9,10 @@ import { Card, CardName, Cards } from "../utils/cards";
 import { shuffleCards } from "../utils/shuffle";
 import {
   getCustomRulesSetData,
+  getLightThemeData,
   getUseCustomInfo,
   storeCustomRulesSetData,
+  storeLightThemeInfo,
   storeUseCustomInfo,
 } from "./asyncstore";
 
@@ -58,7 +60,7 @@ export type Action =
     }
   | {
       type: ActionType.CHANGE_THEME;
-      payload: undefined;
+      payload: boolean | undefined;
     };
 
 const initialState: State = {
@@ -101,9 +103,13 @@ const reducer = (state: State, action: Action): State => {
         gameState: GameState.IN_PROGRESS,
       };
     case ActionType.CHANGE_THEME:
+      const isLightTheme =
+        action.payload === undefined ? !state.isLightTheme : action.payload;
+      storeLightThemeInfo(isLightTheme);
+      console.warn(isLightTheme)
       return {
         ...state,
-        isLightTheme: !state.isLightTheme,
+        isLightTheme,
       };
     default:
       console.warn("ERROR :: Unknown action in reducer");
@@ -111,47 +117,58 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
+type RulesDict = {
+  [key in CardName]?: string;
+};
+
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [useCustomRules, setUseCustom] = useState<boolean>(false);
-  const [customRules, setCustomRules] = useState<{
-    [key in CardName]?: string;
-  }>({});
+  const [customRules, setCustomRules] = useState<RulesDict>({});
 
   useEffect(() => {
     const fetchDataFromStorage = async () => {
       const useCustom = await getUseCustomInfo();
       const customRules = await getCustomRulesSetData();
+      const isLightMode = await getLightThemeData();
 
-      setUseCustom(useCustom || false);
-      setCustomRules(customRules || {});
+      setUseCustom(useCustom ?? false);
+      setCustomRules(customRules ?? {});
+      !isLightMode &&
+        dispatch({ type: ActionType.CHANGE_THEME, payload: isLightMode });
     };
     fetchDataFromStorage();
   }, []);
 
-  useEffect(() => {
+  const storeDataUseCustom = () => {
     const storeUseCustomData = async () => {
       await storeUseCustomInfo(useCustomRules);
     };
     storeUseCustomData();
-  }, [useCustomRules]);
+  };
 
-  useEffect(() => {
-    const storeCustomRules = async () => {
-      await storeCustomRulesSetData(customRules);
+  const storeDataRules = () => {
+    const storeCustomRules = async (newRules: RulesDict) => {
+      await storeCustomRulesSetData(newRules);
     };
-    storeCustomRules();
-  }, [customRules]);
+    customRules && storeCustomRules(customRules);
+  };
 
   return (
     <Provider
       value={{
         state: { ...state, useCustomRules, customRules },
         dispatch,
-        setUseCustom,
-        setCustomRules,
+        setUseCustom: (useCustom) => {
+          setUseCustom(useCustom);
+          storeDataUseCustom();
+        },
+        setCustomRules: (rules) => {
+          setCustomRules(rules);
+          storeDataRules();
+        },
       }}
     >
       {children}
