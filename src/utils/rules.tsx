@@ -18,7 +18,7 @@ export function getCardRule(cardName: CardName) {
     case CardName.DIAMOND4:
     case CardName.SPADE4:
     case CardName.HEART4:
-      return "4 whores - all ladies drink";
+      return "4 wh*res - all ladies drink";
 
     case CardName.CLUB5:
     case CardName.DIAMOND5:
@@ -30,7 +30,7 @@ export function getCardRule(cardName: CardName) {
     case CardName.DIAMOND6:
     case CardName.SPADE6:
     case CardName.HEART6:
-      return "6 dicks - all guys drink";
+      return "6 d*cks - all guys drink";
 
     case CardName.CLUB7:
     case CardName.DIAMOND7:
