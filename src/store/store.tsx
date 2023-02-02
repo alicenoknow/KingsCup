@@ -106,7 +106,6 @@ const reducer = (state: State, action: Action): State => {
       const isLightTheme =
         action.payload === undefined ? !state.isLightTheme : action.payload;
       storeLightThemeInfo(isLightTheme);
-      console.warn(isLightTheme)
       return {
         ...state,
         isLightTheme,
