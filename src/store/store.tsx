@@ -16,19 +16,22 @@ import {
   storeUseCustomInfo,
 } from "./asyncstore";
 
+
+export type CustomRules = { [key in CardName]?: string };
+
 interface State {
   gameState: GameState;
   cards: ReadonlyArray<Card>;
   currentIndex: number;
   isLightTheme: boolean;
   useCustomRules: boolean;
-  customRules: { [key in CardName]?: string };
+  customRules: CustomRules;
 }
 
 interface ContextState {
   state: State;
   dispatch: Dispatch<Action>;
-  setCustomRules: (customRules: { [key in CardName]?: string }) => void;
+  setCustomRules: (customRules: CustomRules) => void;
   setUseCustom: (useCustomRules: boolean) => void;
 }
 
@@ -47,21 +50,21 @@ export enum ActionType {
 
 export type Action =
   | {
-      type: ActionType.SHUFFLE_DECK;
-      payload: undefined;
-    }
+    type: ActionType.SHUFFLE_DECK;
+    payload: undefined;
+  }
   | {
-      type: ActionType.CHANGE_GAME_STATE;
-      payload: GameState;
-    }
+    type: ActionType.CHANGE_GAME_STATE;
+    payload: GameState;
+  }
   | {
-      type: ActionType.NEXT_CARD;
-      payload: undefined;
-    }
+    type: ActionType.NEXT_CARD;
+    payload: undefined;
+  }
   | {
-      type: ActionType.CHANGE_THEME;
-      payload: boolean | undefined;
-    };
+    type: ActionType.CHANGE_THEME;
+    payload: boolean | undefined;
+  };
 
 const initialState: State = {
   gameState: GameState.START,

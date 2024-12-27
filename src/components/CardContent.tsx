@@ -1,8 +1,7 @@
-import React from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { StyleSheet, Image, Dimensions, Platform } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { StyleSheet, Image, Dimensions, Platform, ImageSourcePropType, ImageStyle } from "react-native";
 import Animated, {
+  AnimatedStyle,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -14,15 +13,15 @@ import { Back, CARD_ASPECT_RATIO } from "../utils/assets";
 
 const { width } = Dimensions.get("window");
 
-const HORIZONTAL_MARGIN = 128;
-const CARD_WIDTH = width - HORIZONTAL_MARGIN;
+const CARD_WIDTH = width - Spacer.X_LARGE_128;
 const CARD_HEIGHT = CARD_WIDTH * CARD_ASPECT_RATIO;
-
-const perspective = 1000;
+const ANIMATION_DURATION = 300;
+const INITIAL_ROTATION = 180;
+const PERSPECTIVE = 1000;
 
 interface CardContentProps {
-  front: any; //TODO
-  style: any;
+  front: ImageSourcePropType;
+  style: AnimatedStyle<ImageStyle>;
   index: number;
 }
 
@@ -31,35 +30,35 @@ export default function CardContent({ index, front, style }: CardContentProps) {
     state: { currentIndex, gameState },
   } = useContext(AppContext);
 
-  const rotateYAsDeg = useSharedValue(180);
+  const rotateYAsDeg = useSharedValue(INITIAL_ROTATION);
   const backOpacity = useSharedValue(1);
   const frontOpacity = useSharedValue(0);
 
   useEffect(() => {
     if (currentIndex === index) {
-      rotateYAsDeg.value = withTiming(0, { duration: 300 });
-      backOpacity.value = withTiming(0, { duration: 300 });
-      frontOpacity.value = withTiming(1, { duration: 300 });
+      rotateYAsDeg.value = withTiming(0, { duration: ANIMATION_DURATION });
+      backOpacity.value = withTiming(0, { duration: ANIMATION_DURATION });
+      frontOpacity.value = withTiming(1, { duration: ANIMATION_DURATION });
     }
-  }, [currentIndex]);
+  }, [currentIndex, index]);
 
   useEffect(() => {
     if (gameState === GameState.START && index !== currentIndex) {
-      rotateYAsDeg.value = 180;
+      rotateYAsDeg.value = INITIAL_ROTATION;
       backOpacity.value = 1;
       frontOpacity.value = 0;
     }
-  }, [gameState]);
+  }, [gameState, index, currentIndex]);
 
   const backCardStyle = useAnimatedStyle(() => ({
     opacity: backOpacity.value,
-    transform: [{ perspective: perspective ?? 100 }],
+    transform: [{ perspective: PERSPECTIVE }],
   }));
 
   const frontCardStyle = useAnimatedStyle(() => ({
     opacity: frontOpacity.value,
     transform: [
-      { perspective: perspective ?? 100 },
+      { perspective: PERSPECTIVE },
       { rotateY: `${rotateYAsDeg.value}deg` },
     ],
   }));
@@ -72,30 +71,10 @@ export default function CardContent({ index, front, style }: CardContentProps) {
         style,
       ]}
     >
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            justifyContent: "center",
-            alignItems: "center",
-            backfaceVisibility: "hidden",
-          },
-          backCardStyle,
-        ]}
-      >
+      <Animated.View style={[styles.cardFace, backCardStyle]}>
         <Image source={Back} style={styles.image} resizeMode="contain" />
       </Animated.View>
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            justifyContent: "center",
-            alignItems: "center",
-            backfaceVisibility: "hidden",
-          },
-          frontCardStyle,
-        ]}
-      >
+      <Animated.View style={[styles.cardFace, frontCardStyle]}>
         <Image source={front} style={styles.image} resizeMode="contain" />
       </Animated.View>
     </Animated.View>
@@ -104,8 +83,7 @@ export default function CardContent({ index, front, style }: CardContentProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.white,
-    borderRadius: Spacer.SMALL_8,
+    borderRadius: Spacer.MEDIUM_16,
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     justifyContent: "center",
@@ -113,21 +91,24 @@ const styles = StyleSheet.create({
   },
   cardIOS: {
     shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 4,
-    elevation: 5,
   },
   cardAndroid: {
     borderWidth: 2,
     borderColor: Colors.black,
+    elevation: 5,
+  },
+  cardFace: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backfaceVisibility: "hidden",
   },
   image: {
-    width: CARD_WIDTH,
-    height: CARD_WIDTH * CARD_ASPECT_RATIO,
     borderRadius: Spacer.SMALL_8,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
   },
 });

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   StyleProp,
@@ -22,7 +21,7 @@ interface ButtonProps {
   onPress: () => void;
 }
 
-export default function Button(props: ButtonProps) {
+const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const { label, disabled, style, textStyle, onPress } = props;
 
   return (
@@ -47,3 +46,5 @@ const styles = StyleSheet.create({
     color: Colors.buttonText,
   },
 });
+
+export default React.memo(Button);

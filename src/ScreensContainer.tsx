@@ -1,31 +1,34 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HelpIcon from "./components/HelpIcon";
 import GameBoard from "./screens/GameBoard";
 import Home from "./screens/Home";
 import RuleDetails from "./screens/RuleDetails";
 import Rules from "./screens/Rules";
-import { Screens } from "./screens/types";
+import { RootStackParamList, Screens } from "./screens/types";
 import { AppContext } from "./store/store";
 import { getOnBackgroundColor } from "./styling/themeHelper";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const commonScreenOptions = {
+  headerTransparent: true,
+  headerTitle: "",
+};
 
 export default function ScreensContainer() {
-  const {
-    state: { isLightTheme },
-  } = useContext(AppContext);
-
-  const commonScreenOptions = {
-    headerTransparent: true,
-    headerTitle: "",
-    headerTintColor: getOnBackgroundColor(isLightTheme).color,
-  };
+  const { state: { isLightTheme } } = useContext(AppContext);
+  const headerTintColor = getOnBackgroundColor(isLightTheme).color;
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={commonScreenOptions}>
+      <Stack.Navigator
+        screenOptions={{
+          ...commonScreenOptions,
+          headerTintColor,
+        }}
+      >
         <Stack.Screen name={Screens.HOME} component={Home} />
         <Stack.Screen
           name={Screens.GAME_BOARD}

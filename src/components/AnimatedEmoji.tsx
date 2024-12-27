@@ -7,6 +7,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Font } from "../styling/fonts";
 import DecoratedText from "./DecoratedText";
+import { Spacer } from "../styling/spacers";
 
 interface EmojiProps {
   emoji: string;
@@ -17,7 +18,7 @@ const { width, height } = Dimensions.get("window");
 export default function AnimatedEmoji(props: EmojiProps) {
   const { emoji } = props;
 
-  const yVal = useSharedValue(Math.random() * height * 0.6);
+  const yVal = useSharedValue(Spacer.MEDIUM_16 + Math.random() * (height - Spacer.FOOTER));
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -27,7 +28,7 @@ export default function AnimatedEmoji(props: EmojiProps) {
           duration: 2000 + Math.random() * 3000,
         },
         () => {
-          yVal.value = Math.random() * height * 0.6;
+          yVal.value = Spacer.MEDIUM_16 + Math.random() * (height - Spacer.FOOTER)
         }
       ),
     };
@@ -38,8 +39,8 @@ export default function AnimatedEmoji(props: EmojiProps) {
       style={[
         styles.container,
         {
-          left: Math.random() * width,
-          top: Math.random() * height * 0.6,
+          left: Spacer.MEDIUM_16 + Math.random() * (width - Spacer.LARGE_48 - Spacer.SMALL_8),
+          top: Spacer.MEDIUM_16 + Math.random() * (height - Spacer.FOOTER)
         },
         animatedStyle,
       ]}
@@ -52,11 +53,9 @@ export default function AnimatedEmoji(props: EmojiProps) {
 const styles = StyleSheet.create({
   text: {
     fontSize: Font.LARGE,
-    zIndex: -1,
   },
   container: {
     position: "absolute",
-    zIndex: -1,
     opacity: 0.5,
   },
 });

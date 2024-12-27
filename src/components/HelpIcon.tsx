@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback, useEffect } from "react";
 import {
   TouchableOpacity,
   View,
@@ -22,47 +22,19 @@ export default function HelpIcon() {
   const {
     state: { currentIndex, cards, isLightTheme, useCustomRules, customRules },
   } = useContext(AppContext);
-  const [isInfoVisible, setInfoVisibility] = useState<boolean>(false);
+  const [isInfoVisible, setInfoVisibility] = useState(false);
 
-  const cardInfoModal = () => {
-    if (!currentIndex) {
-      return null;
-    }
+  const toggleInfoVisibility = useCallback(() => {
+    setInfoVisibility((prev) => !prev);
+  }, []);
 
-    const ruleDescription =
-      useCustomRules && customRules[cards[currentIndex]?.name]
-        ? customRules[cards[currentIndex]?.name]
-        : getCardRule(cards[currentIndex]?.name);
-
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isInfoVisible}
-        onRequestClose={() => {
-          setInfoVisibility(false);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <DecoratedText
-              textStyle={styles.modalText}
-              text={ruleDescription ?? ""}
-            />
-            <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
-              label={"Got it!"}
-              onPress={() => setInfoVisibility(false)}
-            />
-          </View>
-        </View>
-      </Modal>
-    );
-  };
+  const ruleDescription =
+    useCustomRules && customRules[cards[currentIndex]?.name]
+      ? customRules[cards[currentIndex]?.name]
+      : getCardRule(cards[currentIndex]?.name);
 
   return (
-    <TouchableOpacity onPress={() => setInfoVisibility(!isInfoVisible)}>
+    <TouchableOpacity style={styles.touchable} onPress={() => setInfoVisibility(true)}>
       <View
         style={[
           styles.icon,
@@ -74,12 +46,33 @@ export default function HelpIcon() {
           text="?"
         />
       </View>
-      {cardInfoModal()}
+      <Modal
+        animationType="slide"
+        transparent
+        visible={isInfoVisible}
+        onRequestClose={() => setInfoVisibility(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <DecoratedText
+              textStyle={styles.modalText}
+              text={ruleDescription || ""}
+            />
+            <Button
+              style={styles.button}
+              textStyle={styles.buttonText}
+              label="Got it!"
+              onPress={toggleInfoVisibility}
+            />
+          </View>
+        </View>
+      </Modal>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  touchable: { padding: Spacer.MEDIUM_16 },
   text: {
     fontSize: Platform.OS === "android" ? Font.LARGE : Font.MEDIUM,
     fontWeight: "bold",
@@ -93,13 +86,6 @@ const styles = StyleSheet.create({
     width: ICON_SIZE,
     justifyContent: "center",
   },
-  modal: {
-    flex: 1,
-    width: "70%",
-    height: "50%",
-    backgroundColor: Colors.white,
-    margin: Spacer.LARGE_48,
-  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -112,11 +98,8 @@ const styles = StyleSheet.create({
     borderRadius: Spacer.MEDIUM_24,
     padding: Spacer.MEDIUM_24,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,

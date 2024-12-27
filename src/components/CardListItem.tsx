@@ -1,11 +1,6 @@
 import React from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
-import {
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { TouchableOpacity, View, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -18,19 +13,13 @@ import { Font } from "../styling/fonts";
 import DecoratedText from "./DecoratedText";
 import { Spacer } from "../styling/spacers";
 
+const { height: windowHeight } = Dimensions.get("window");
+
+const ICONS = ["♠️", "♥️", "♣️", "♦️"];
+const ITEM_TOTAL_HEIGHT = Spacer.LARGE_48 + 2 * Spacer.SMALL_8;
+
 function getIcon(index: number): string {
-  switch (index % 4) {
-    case 0:
-      return "♠️";
-    case 1:
-      return "♥️";
-    case 2:
-      return "♣️";
-    case 3:
-      return "♦️";
-    default:
-      return "";
-  }
+  return ICONS[index % ICONS.length];
 }
 
 interface CardListItemProps {
@@ -41,55 +30,57 @@ interface CardListItemProps {
   onPress: () => void;
 }
 
-const { height } = Dimensions.get("window");
-const distanceBetweenItem = 10;
-const itemHeight = 50;
-const totalItemHeight = itemHeight + 2 * distanceBetweenItem;
-
-export default function CardListItem(props: CardListItemProps) {
+export default function CardListItem({
+  card,
+  index,
+  y,
+  headerHeight,
+  onPress,
+}: CardListItemProps) {
   const navHeaderHeight = useHeaderHeight();
-  const { index, card, y, headerHeight, onPress } = props;
+  const listContentHeight = windowHeight - headerHeight - navHeaderHeight;
 
-  const listContentHeight = height - headerHeight - navHeaderHeight;
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(
-        y.value,
-        [
-          (index + 1) * totalItemHeight - listContentHeight,
-          (index + 2) * totalItemHeight - listContentHeight,
-          index * totalItemHeight,
-          (index + 1) * totalItemHeight,
-        ],
-        [0, 1, 1, 0],
-        {
-          extrapolateRight: Extrapolation.CLAMP,
-          extrapolateLeft: Extrapolation.CLAMP,
-        }
-      ),
-      transform: [
-        {
-          scale: interpolate(
-            y.value,
-            [
-              (index + 1) * totalItemHeight - listContentHeight,
-              (index + 2) * totalItemHeight - listContentHeight,
-              index * totalItemHeight,
-              (index + 1) * totalItemHeight,
-            ],
-            [0, 1, 1, 0]
-          ),
-        },
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      y.value,
+      [
+        (index + 1) * ITEM_TOTAL_HEIGHT - listContentHeight,
+        (index + 2) * ITEM_TOTAL_HEIGHT - listContentHeight,
+        index * ITEM_TOTAL_HEIGHT,
+        (index + 1) * ITEM_TOTAL_HEIGHT,
       ],
-    };
-  });
+      [0, 1, 1, 0],
+      {
+        extrapolateRight: Extrapolation.CLAMP,
+        extrapolateLeft: Extrapolation.CLAMP,
+      }
+    ),
+    transform: [
+      {
+        scale: interpolate(
+          y.value,
+          [
+            (index + 1) * ITEM_TOTAL_HEIGHT - listContentHeight,
+            (index + 2) * ITEM_TOTAL_HEIGHT - listContentHeight,
+            index * ITEM_TOTAL_HEIGHT,
+            (index + 1) * ITEM_TOTAL_HEIGHT,
+          ],
+          [0, 1, 1, 0],
+          {
+            extrapolateRight: Extrapolation.CLAMP,
+            extrapolateLeft: Extrapolation.CLAMP,
+          }
+        ),
+      },
+    ],
+  }));
 
   return (
     <TouchableOpacity onPress={onPress}>
       <Animated.View style={[styles.item, animatedStyle]} key={index}>
         <View>
           <DecoratedText
-            textStyle={[styles.text]}
+            textStyle={styles.text}
             text={`${getIcon(index)}  ${card.label}`}
           />
         </View>
@@ -100,18 +91,16 @@ export default function CardListItem(props: CardListItemProps) {
 
 const styles = StyleSheet.create({
   item: {
-    marginVertical: distanceBetweenItem,
+    marginVertical: Spacer.SMALL_8,
     alignSelf: "center",
-    height: itemHeight,
+    height: Spacer.LARGE_48,
     width: "90%",
-    alignContent: "center",
     justifyContent: "center",
     borderRadius: Spacer.MEDIUM_24,
     backgroundColor: Colors.secondary,
   },
   text: {
     textAlign: "center",
-    textAlignVertical: "center",
     fontSize: Font.LARGE,
     fontWeight: "bold",
     color: Colors.secondaryText,

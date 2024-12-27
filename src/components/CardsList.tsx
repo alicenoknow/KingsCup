@@ -1,24 +1,18 @@
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Screens } from "../screens/types";
 import { Spacer } from "../styling/spacers";
 import { CardName } from "../utils/cards";
 import CardListItem from "./CardListItem";
 
-interface CardListItemProps {
-  label: string;
-  cards: CardName[];
-}
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const cardsItems: CardListItemProps[] = [
+const cardsItems = [
   {
     label: "2",
     cards: [
@@ -144,15 +138,15 @@ export default function CardsList({ headerHeight, navigation }: CardListProps) {
     y.value = event.contentOffset.y;
   });
 
-  const renderItem = ({ index, item }: { index: number; item: unknown }) => (
+  const renderItem = ({ index, item }: { index: number; item: typeof cardsItems[number] }) => (
     <CardListItem
       index={index}
       y={y}
-      card={item as CardListItemProps} // TODO idk ts issue
+      card={item}
       onPress={() =>
         navigation.navigate(Screens.RULES_DETAILS, {
-          cards: (item as CardListItemProps).cards,
-          label: (item as CardListItemProps).label,
+          cards: item.cards,
+          label: item.label,
         })
       }
       headerHeight={headerHeight}
@@ -161,11 +155,12 @@ export default function CardsList({ headerHeight, navigation }: CardListProps) {
 
   return (
     <View style={styles.list}>
-      <AnimatedFlatList
+      <Animated.FlatList
         scrollEventThrottle={16}
         bounces={false}
         data={cardsItems}
         renderItem={renderItem}
+        keyExtractor={(item) => item.label}
         onScroll={scrollHandler}
         ListFooterComponent={<View style={styles.footer} />}
         contentContainerStyle={styles.contentList}
@@ -178,7 +173,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     width: "100%",
-    height: 150,
+    height: Spacer.FOOTER,
   },
   list: {
     flex: 1,

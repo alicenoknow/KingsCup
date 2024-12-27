@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Switch } from "react-native";
-import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 
 interface UseCustomToggleProps {

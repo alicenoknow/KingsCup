@@ -1,61 +1,53 @@
-import { RouteProp } from "@react-navigation/native";
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { StyleSheet, SafeAreaView, TextInput, Platform } from "react-native";
+import { RouteProp } from "@react-navigation/native";
 import Button from "../components/Button";
 import DecoratedText from "../components/DecoratedText";
 import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
-import {
-  getBackgroundColor,
-  getOnBackgroundColor,
-} from "../styling/themeHelper";
-import { CardName } from "../utils/cards";
+import { getBackgroundColor, getOnBackgroundColor } from "../styling/themeHelper";
 import { getCardRule } from "../utils/rules";
+import { RootStackParamList, Screens } from "./types";
 
-interface RuleDetailsProps {
-  route: RouteProp<{ params: { label: string; cards: CardName[] } }, "params">;
-}
+type RuleDetailsRouteProp = RouteProp<RootStackParamList, Screens.RULES_DETAILS>;
 
-export default function RuleDetails({ route }: RuleDetailsProps) {
-  const { cards, label } = route.params;
+export default function RuleDetails({ route }: { route: RuleDetailsRouteProp }): JSX.Element {
+  const { cards = [], label = "" } = route.params || {};
+
   const {
     state: { isLightTheme, customRules },
     setCustomRules,
   } = useContext(AppContext);
 
-  const [customAction, setCustomAction] = useState<string>(
-    customRules[cards[0]] || ""
-  );
+  const [customAction, setCustomAction] = useState<string>(customRules[cards[0]] || "");
   const [isActionConfirmed, setActionConfirmed] = useState<boolean>(false);
 
-  const confirmNewRule = () => {
-    const newRules = customRules || {};
-    for (const card of cards) {
+  const confirmNewRule = useCallback(() => {
+    const newRules = { ...customRules };
+    cards.forEach((card) => {
       newRules[card] = customAction;
-    }
+    });
     setCustomRules(newRules);
     setActionConfirmed(true);
-  };
+  }, [cards, customAction, customRules, setCustomRules]);
 
-  const onValueChange = (value: string) => {
+  const onValueChange = useCallback((value: string) => {
     setCustomAction(value);
+    if (isActionConfirmed) setActionConfirmed(false);
+  }, [isActionConfirmed]);
 
-    if (isActionConfirmed) {
-      setActionConfirmed(false);
-    }
-  };
+  const themeStyles = getOnBackgroundColor(isLightTheme);
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
       <DecoratedText
-        textStyle={[styles.title, getOnBackgroundColor(isLightTheme)]}
+        textStyle={[styles.title, themeStyles]}
         text={`Action for card ${label}`}
       />
       <DecoratedText
-        textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
+        textStyle={[styles.subtitle, themeStyles]}
         text="Default action"
       />
       <TextInput
@@ -66,7 +58,7 @@ export default function RuleDetails({ route }: RuleDetailsProps) {
         editable={false}
       />
       <DecoratedText
-        textStyle={[styles.subtitle, getOnBackgroundColor(isLightTheme)]}
+        textStyle={[styles.subtitle, themeStyles]}
         text="🛠 Type your custom action"
       />
       <TextInput
@@ -119,8 +111,5 @@ const styles = StyleSheet.create({
     marginVertical: Spacer.MEDIUM_16,
     padding: Spacer.SMALL_8,
     paddingHorizontal: Spacer.MEDIUM_16,
-  },
-  disclaimer: {
-    fontSize: Font.MEDIUM,
   },
 });
