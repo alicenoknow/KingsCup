@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.alicenoknow.kingscup"
@@ -36,6 +34,7 @@
       "eas": {
         "projectId": "18487e4d-5d58-406f-89ed-29dd6fb7cd64"
       }
-    }
+    },
+    "newArchEnabled": true
   }
 }
