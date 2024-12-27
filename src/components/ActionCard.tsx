@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { useContext } from "react";
+import React, { useContext, useEffect, useCallback, useMemo } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector, PanGestureHandlerGestureEvent } from "react-native-gesture-handler";
 import {
   Easing,
   useAnimatedStyle,
@@ -17,11 +16,14 @@ import CardContent from "./CardContent";
 
 const { width, height } = Dimensions.get("window");
 
-const HIDE_OFFSET = 10;
-const HORIZONTAL_SNAP_POINTS = [-width - HIDE_OFFSET, 0, width + HIDE_OFFSET];
-const VERTICAL_SNAP_POINTS = [-height - HIDE_OFFSET, 0, height + HIDE_OFFSET];
-const SLIDE_IN_DURATION = 250;
-const MAX_ANGLE = 10;
+const CARD_HIDE_OFFSET = 10;
+const CARD_HORIZONTAL_SNAP_POINTS = [-width - CARD_HIDE_OFFSET, 0, width + CARD_HIDE_OFFSET];
+const CARD_VERTICAL_SNAP_POINTS = [-height - CARD_HIDE_OFFSET, 0, height + CARD_HIDE_OFFSET];
+const CARD_SLIDE_IN_DURATION_MS = 250;
+const CARD_MAX_ROTATION_DEG = 10;
+const TOTAL_CARDS = 49;
+const VISIBLE_CARDS = 5; // only a few first cards are visible and animated initially
+const DRAG_SCALE = 1.2;
 
 interface CardProps {
   card: Card;
@@ -33,89 +35,92 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
     state: { currentIndex, gameState },
     dispatch,
   } = useContext(AppContext);
+
   const offset = useSharedValue({ x: 0, y: 0 });
   const translateX = useSharedValue(0);
-  const translateY = useSharedValue(-height - HIDE_OFFSET);
+  const translateY = useSharedValue(0);
   const scale = useSharedValue(1);
   const rotateZ = useSharedValue(0);
-  const delay = index > 42 ? (index - 42) * SLIDE_IN_DURATION : 1;
-  const theta = -MAX_ANGLE + Math.random() * 2 * MAX_ANGLE;
+  const initialAngle = useMemo(() => -CARD_MAX_ROTATION_DEG + Math.random() * 2 * CARD_MAX_ROTATION_DEG, [])
 
-  useEffect(() => {
-    if (gameState === GameState.START) {
-      scale.value = 1;
-      translateY.value = withDelay(
-        delay,
-        withTiming(0, {
-          duration: SLIDE_IN_DURATION,
-          easing: Easing.ease,
-        })
-      );
-      translateX.value = withDelay(
-        delay,
-        withTiming(0, {
-          duration: SLIDE_IN_DURATION,
-          easing: Easing.ease,
-        })
-      );
-      rotateZ.value = withDelay(delay, withSpring(theta));
+  const slideInCard = useCallback(() => {
+    scale.value = 1;
+
+    const slideInDirection = Math.floor(Math.random() * 4);
+    if (slideInDirection === 0) {
+      translateX.value = -width - CARD_HIDE_OFFSET;
+    } else if (slideInDirection === 1) {
+      translateY.value = -height - CARD_HIDE_OFFSET;
+    } else if (slideInDirection === 2) {
+      translateY.value = height + CARD_HIDE_OFFSET;
+    } else if (slideInDirection === 3) {
+      translateX.value = width + CARD_HIDE_OFFSET;
     }
-  }, [index, gameState, translateY, rotateZ, delay, theta]);
+
+    const delay = (TOTAL_CARDS - index) * CARD_SLIDE_IN_DURATION_MS;
+    translateX.value = withDelay(
+      delay,
+      withTiming(0, { duration: CARD_SLIDE_IN_DURATION_MS, easing: Easing.ease })
+    );
+    translateY.value = withDelay(
+      delay,
+      withTiming(0, { duration: CARD_SLIDE_IN_DURATION_MS, easing: Easing.ease })
+    );
+    rotateZ.value = withDelay(delay, withSpring(initialAngle));
+  }, []);
 
   useEffect(() => {
+    if (gameState === GameState.START && index >= TOTAL_CARDS - VISIBLE_CARDS) {
+      slideInCard();
+    } else {
+      rotateZ.value = withDelay(0, withSpring(initialAngle));
+    }
+  }, [gameState, slideInCard, index]);
+
+  const handleKingCard = useCallback(() => {
     if (index === currentIndex && name === CardName.KING) {
-      dispatch({
-        type: ActionType.CHANGE_GAME_STATE,
-        payload: GameState.KING,
-      });
+      dispatch({ type: ActionType.CHANGE_GAME_STATE, payload: GameState.KING });
     }
-  }, [currentIndex]);
+  }, [currentIndex, dispatch, index, name]);
+
+  useEffect(() => {
+    handleKingCard();
+  }, [handleKingCard]);
+
+  const handleGestureBegin = () => {
+    if (index !== currentIndex || gameState === GameState.KING) return;
+    offset.value = { x: translateX.value, y: translateY.value };
+    rotateZ.value = withTiming(0);
+    scale.value = withTiming(DRAG_SCALE);
+  };
+
+  const handleGestureUpdate = ({ translationX, translationY }: PanGestureHandlerGestureEvent["nativeEvent"]) => {
+    if (index !== currentIndex || gameState === GameState.KING) return;
+    translateX.value = offset.value.x + translationX;
+    translateY.value = offset.value.y + translationY;
+  };
+
+  const handleGestureEnd = ({ velocityX, velocityY }: PanGestureHandlerGestureEvent["nativeEvent"]) => {
+    if (index !== currentIndex || gameState === GameState.KING) return;
+
+    const destX = snapPoint(translateX.value, velocityX, CARD_HORIZONTAL_SNAP_POINTS);
+    const destY = snapPoint(translateY.value, velocityY, CARD_VERTICAL_SNAP_POINTS);
+
+    translateX.value = withSpring(destX, { velocity: velocityX });
+    translateY.value = withSpring(destY, { velocity: velocityY });
+
+    if (destX || destY) {
+      dispatch({ type: ActionType.NEXT_CARD, payload: undefined });
+    }
+  };
 
   const gesture = Gesture.Pan()
     .runOnJS(true)
-    .onBegin(() => {
-      if (index !== currentIndex || gameState === GameState.KING) {
-        return;
-      }
-      offset.value.x = translateX.value;
-      offset.value.y = translateY.value;
-      rotateZ.value = withTiming(0);
-      scale.value = withTiming(1.2);
-    })
-    .onUpdate(({ translationX, translationY }) => {
-      if (index !== currentIndex || gameState === GameState.KING) {
-        return;
-      }
-      translateX.value = offset.value.x + translationX;
-      translateY.value = offset.value.y + translationY;
-    })
-    .onEnd(({ velocityX, velocityY }) => {
-      if (index !== currentIndex || gameState === GameState.KING) {
-        return;
-      }
-      const destX = snapPoint(
-        translateX.value,
-        velocityX,
-        HORIZONTAL_SNAP_POINTS
-      );
-      const destY = snapPoint(
-        translateY.value,
-        velocityY,
-        VERTICAL_SNAP_POINTS
-      );
+    .onBegin(handleGestureBegin)
+    .onUpdate(handleGestureUpdate)
+    .onEnd(handleGestureEnd);
 
-      translateX.value = withSpring(destX, { velocity: velocityX });
-      translateY.value = withSpring(destY, { velocity: velocityY });
-
-      if (destX || destY) {
-        dispatch({
-          type: ActionType.NEXT_CARD,
-          payload: undefined,
-        });
-      }
-    });
-
-  const style = useAnimatedStyle(() => ({
+  const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: translateX.value },
       { translateY: translateY.value },
@@ -127,7 +132,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
   return (
     <View style={styles.container} pointerEvents="box-none">
       <GestureDetector gesture={gesture}>
-        <CardContent index={index} front={img} style={style} />
+        <CardContent index={index} front={img} style={animatedStyle} />
       </GestureDetector>
     </View>
   );
