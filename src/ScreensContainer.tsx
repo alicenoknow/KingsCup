@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import HelpIcon from "./components/HelpIcon";
 import GameBoard from "./screens/GameBoard";
 import Home from "./screens/Home";
 import RuleDetails from "./screens/RuleDetails";
