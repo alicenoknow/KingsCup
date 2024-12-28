@@ -96,8 +96,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   cardAndroid: {
-    borderWidth: 2,
-    borderColor: Colors.black,
     elevation: 5,
   },
   cardFace: {

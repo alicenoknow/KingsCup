@@ -1,12 +1,12 @@
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useContext, useMemo, useState, useCallback } from "react";
-import { View, StyleSheet, SafeAreaView, LayoutChangeEvent, Platform } from "react-native";
+import { View, StyleSheet, LayoutChangeEvent, Platform } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import CardsList from "../components/CardsList";
 import DecoratedText from "../components/DecoratedText";
 import { CustomToggleButton } from "../components/CustomToggleButton";
 import { AppContext } from "../store/store";
-import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
 import { getBackgroundColor, getOnBackgroundColor } from "../styling/themeHelper";
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: Spacer.MEDIUM_24,
+    marginHorizontal: Spacer.LARGE_48,
   },
 });
 

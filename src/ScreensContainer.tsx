@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HelpIcon from "./components/HelpIcon";
 import GameBoard from "./screens/GameBoard";
 import Home from "./screens/Home";
@@ -22,28 +23,27 @@ export default function ScreensContainer() {
   const headerTintColor = getOnBackgroundColor(isLightTheme).color;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          ...commonScreenOptions,
-          headerTintColor,
-        }}
-      >
-        <Stack.Screen name={Screens.HOME} component={Home} />
-        <Stack.Screen
-          name={Screens.GAME_BOARD}
-          component={GameBoard}
-          options={{
-            headerRight: () => <HelpIcon />,
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            ...commonScreenOptions,
+            headerTintColor,
           }}
-        />
-        <Stack.Screen name={Screens.RULES} component={Rules} />
-        <Stack.Screen
-          name={Screens.RULES_DETAILS}
-          component={RuleDetails}
-          initialParams={{ cards: [] }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+        >
+          <Stack.Screen name={Screens.HOME} component={Home} />
+          <Stack.Screen
+            name={Screens.GAME_BOARD}
+            component={GameBoard}
+          />
+          <Stack.Screen name={Screens.RULES} component={Rules} />
+          <Stack.Screen
+            name={Screens.RULES_DETAILS}
+            component={RuleDetails}
+            initialParams={{ cards: [] }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

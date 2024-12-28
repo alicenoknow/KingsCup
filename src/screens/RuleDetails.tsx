@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from "react";
-import { StyleSheet, SafeAreaView, TextInput, Platform } from "react-native";
+import { StyleSheet, TextInput, Platform } from "react-native";
 import { RouteProp } from "@react-navigation/native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from "../components/Button";
 import DecoratedText from "../components/DecoratedText";
 import { AppContext } from "../store/store";
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
+    height: "100%",
   },
   title: {
     fontSize: Font.X_LARGE,

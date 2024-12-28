@@ -4,11 +4,11 @@ import React, { useContext } from "react";
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   Platform,
   Image,
   Dimensions,
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from "../components/Button";
 import { ThemeToggleButton } from "../components/ThemeToggleButton";
 import { AppContext } from "../store/store";
