@@ -75,10 +75,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacer.MEDIUM_16,
   },
   helpIcon: {
+    flex: 1,
     position: "absolute",
-    top: Spacer.LARGE_48,
-    right: Spacer.MEDIUM_24,
-    zIndex: 2,
+    top: 2 * Spacer.LARGE_48,
+    alignSelf: "center",
+    zIndex: 3,
   }
 });
 
