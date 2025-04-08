@@ -28,11 +28,11 @@ const GameBoard = ({ navigation }: GameBoardProps) => {
     currentIndex - index < 5 && currentIndex - index >= 0;
 
   useEffect(() => {
-    const beforeRemoveListener = navigation.addListener("beforeRemove", () => {
+    const cleanUpListener = navigation.addListener("beforeRemove", () => {
       dispatch({ type: ActionType.SHUFFLE_DECK, payload: undefined });
     });
 
-    return () => beforeRemoveListener();
+    return () => cleanUpListener();
   }, [navigation, dispatch]);
 
   return (
