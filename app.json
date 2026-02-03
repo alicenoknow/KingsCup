@@ -36,6 +36,23 @@
         "projectId": "18487e4d-5d58-406f-89ed-29dd6fb7cd64"
       }
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "kotlinVersion": "2.0.21",
+            "gradleVersion": "8.13"
+          },
+          "ios": {
+            "deploymentTarget": "15.1",
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
