@@ -164,6 +164,7 @@ export default function CardsList({ headerHeight, navigation }: CardListProps) {
         onScroll={scrollHandler}
         ListFooterComponent={<View style={styles.footer} />}
         contentContainerStyle={styles.contentList}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

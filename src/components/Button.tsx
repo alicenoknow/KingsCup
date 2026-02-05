@@ -1,13 +1,11 @@
 import React from "react";
 import {
   TouchableOpacity,
-  View,
   StyleSheet,
   StyleProp,
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { AppContext } from "../store/store";
 import { Colors } from "../styling/colors";
 import { Font } from "../styling/fonts";
 import { Spacer } from "../styling/spacers";
@@ -25,10 +23,8 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const { label, disabled, style, textStyle, onPress } = props;
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={onPress}>
-      <View style={[styles.button, style]}>
-        <DecoratedText textStyle={[styles.text, textStyle]} text={label} />
-      </View>
+    <TouchableOpacity style={[styles.button, style]} disabled={disabled} onPress={onPress}>
+      <DecoratedText textStyle={[styles.text, textStyle]} text={label} />
     </TouchableOpacity>
   );
 }
