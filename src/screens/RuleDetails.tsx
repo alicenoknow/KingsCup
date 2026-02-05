@@ -82,6 +82,7 @@ export default function RuleDetails({ route }: { route: RuleDetailsRouteProp }):
             onChangeText={onValueChange}
             value={customAction}
             placeholder="What's your action?"
+            placeholderTextColor={Colors.onBackgroundLight}
             scrollEnabled
             multiline
           />
