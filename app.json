@@ -23,9 +23,6 @@
       "package": "com.alicenoknow.kingscup",
       "versionCode": 4
     },
-    "web": {
-      "favicon": "./assets/favicon.webp"
-    },
     "extra": {
       "eas": {
         "projectId": "18487e4d-5d58-406f-89ed-29dd6fb7cd64"
@@ -35,9 +32,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/main.webp",
+          "image": "./assets/splash.png",
           "resizeMode": "contain",
-          "backgroundColor": "#fcf8e6"
+          "backgroundColor": "#fcf8e6",
+          "imageWidth": 100
         }
       ],
       [
