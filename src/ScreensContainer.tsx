@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import GameBoard from "./screens/GameBoard";
@@ -8,7 +8,7 @@ import RuleDetails from "./screens/RuleDetails";
 import Rules from "./screens/Rules";
 import { RootStackParamList, Screens } from "./screens/types";
 import { AppContext } from "./store/store";
-import { getOnBackgroundColor } from "./styling/themeHelper";
+import { getBackgroundColor, getOnBackgroundColor } from "./styling/themeHelper";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,10 +20,18 @@ const commonScreenOptions = {
 export default function ScreensContainer() {
   const { state: { isLightTheme } } = useContext(AppContext);
   const headerTintColor = getOnBackgroundColor(isLightTheme).color;
+  const backgroundColor = getBackgroundColor(isLightTheme).backgroundColor;
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: backgroundColor,
+    },
+  };
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer theme={navTheme}>
         <Stack.Navigator
           screenOptions={{
             ...commonScreenOptions,
