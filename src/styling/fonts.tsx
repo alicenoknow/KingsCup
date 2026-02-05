@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
-
 export enum Font {
   SMALL = 16,
   MEDIUM = 20,

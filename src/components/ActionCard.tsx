@@ -41,7 +41,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
   const translateY = useSharedValue(0);
   const scale = useSharedValue(1);
   const rotateZ = useSharedValue(0);
-  const initialAngle = useMemo(() => -CARD_MAX_ROTATION_DEG + Math.random() * 2 * CARD_MAX_ROTATION_DEG, [])
+  const initialAngle = useMemo(() => -CARD_MAX_ROTATION_DEG + Math.random() * 2 * CARD_MAX_ROTATION_DEG, []);
 
   const slideInCard = useCallback(() => {
     scale.value = 1;
@@ -67,7 +67,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
       withTiming(0, { duration: CARD_SLIDE_IN_DURATION_MS, easing: Easing.ease })
     );
     rotateZ.value = withDelay(delay, withSpring(initialAngle));
-  }, []);
+  }, [index, initialAngle]);
 
   useEffect(() => {
     if (gameState === GameState.START && index >= TOTAL_CARDS - VISIBLE_CARDS) {
@@ -75,7 +75,7 @@ const ActionCard = ({ card: { img, name }, index }: CardProps) => {
     } else {
       rotateZ.value = withDelay(0, withSpring(initialAngle));
     }
-  }, [gameState, slideInCard, index]);
+  }, [gameState, slideInCard, index, initialAngle]);
 
   const handleKingCard = useCallback(() => {
     if (index === currentIndex && name === CardName.KING) {

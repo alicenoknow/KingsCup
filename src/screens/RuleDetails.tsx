@@ -1,7 +1,13 @@
-import React, { useContext, useState, useCallback } from "react";
-import { StyleSheet, TextInput, Platform } from "react-native";
+import React, { useContext, useState, useCallback, JSX } from "react";
+import {
+  StyleSheet,
+  TextInput,
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { RouteProp } from "@react-navigation/native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import DecoratedText from "../components/DecoratedText";
 import { AppContext } from "../store/store";
@@ -34,57 +40,74 @@ export default function RuleDetails({ route }: { route: RuleDetailsRouteProp }):
     setActionConfirmed(true);
   }, [cards, customAction, customRules, setCustomRules]);
 
-  const onValueChange = useCallback((value: string) => {
-    setCustomAction(value);
-    if (isActionConfirmed) setActionConfirmed(false);
-  }, [isActionConfirmed]);
+  const onValueChange = useCallback(
+    (value: string) => {
+      setCustomAction(value);
+      if (isActionConfirmed) setActionConfirmed(false);
+    },
+    [isActionConfirmed]
+  );
 
   const themeStyles = getOnBackgroundColor(isLightTheme);
 
   return (
     <SafeAreaView style={[styles.container, getBackgroundColor(isLightTheme)]}>
-      <DecoratedText
-        textStyle={[styles.title, themeStyles]}
-        text={`Action for card ${label}`}
-      />
-      <DecoratedText
-        textStyle={[styles.subtitle, themeStyles]}
-        text="Default action"
-      />
-      <TextInput
-        style={styles.input}
-        value={getCardRule(cards[0])}
-        multiline
-        scrollEnabled
-        editable={false}
-      />
-      <DecoratedText
-        textStyle={[styles.subtitle, themeStyles]}
-        text="🛠 Type your custom action"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onValueChange}
-        value={customAction}
-        placeholder="What's your action?"
-        scrollEnabled
-        multiline
-      />
-      <Button
-        label={isActionConfirmed ? "Saved" : "Confirm"}
-        style={[styles.button, { opacity: isActionConfirmed ? 0.7 : 1 }]}
-        onPress={confirmNewRule}
-      />
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={"padding"}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <DecoratedText
+            textStyle={[styles.title, themeStyles]}
+            text={`Action for card ${label}`}
+          />
+          <DecoratedText textStyle={[styles.subtitle, themeStyles]} text="Default action" />
+          <TextInput
+            style={styles.input}
+            value={getCardRule(cards[0])}
+            multiline
+            scrollEnabled
+            editable={false}
+          />
+          <DecoratedText
+            textStyle={[styles.subtitle, themeStyles]}
+            text="🛠 Type your custom action"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={onValueChange}
+            value={customAction}
+            placeholder="What's your action?"
+            placeholderTextColor={Colors.onBackgroundLight}
+            scrollEnabled
+            multiline
+          />
+          <Button
+            label={isActionConfirmed ? "Saved" : "Confirm"}
+            style={[styles.button, { opacity: isActionConfirmed ? 0.7 : 1 }]}
+            onPress={confirmNewRule}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: { flex: 1 },
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
+    paddingTop: Spacer.LARGE_48,
     height: "100%",
+  },
+  scrollContent: {
+    alignItems: "center",
+    paddingBottom: Spacer.MEDIUM_16,
   },
   title: {
     fontSize: Font.X_LARGE,
@@ -94,7 +117,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-    height: "25%",
+    height: "30%",
     backgroundColor: Colors.white,
     borderRadius: Spacer.SMALL_8,
     borderWidth: 1,

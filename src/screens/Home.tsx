@@ -15,7 +15,7 @@ import { AppContext } from "../store/store";
 import { Spacer } from "../styling/spacers";
 import { getBackgroundColor, getOnBackgroundColor } from "../styling/themeHelper";
 import { Screens } from "./types";
-import Logo from "../../assets/main.png";
+import Logo from "../../assets/main.webp";
 import { Font } from "../styling/fonts";
 import DecoratedText from "../components/DecoratedText";
 import AnimatedEmoji from "../components/AnimatedEmoji";

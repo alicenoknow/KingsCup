@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    paddingTop: Platform.OS === "android" ? Spacer.LARGE_48 : 0,
+    paddingTop: Spacer.LARGE_48,
   },
   title: {
     fontSize: Font.X_LARGE,
